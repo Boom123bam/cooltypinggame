@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import TextTunnel from "./TextTunnnel";
 
 // "node_modules/three/examples/fonts/droid/droid_serif_regular.typeface.json"
@@ -17,14 +17,14 @@ const GameCanvas: React.FC<{
         width: "100%",
         top: 0,
         left: 0,
-        // zIndex: -1,
+        zIndex: -1,
       }}
     >
-      <Canvas>
-        <OrbitControls />
-        <axesHelper />
-        <ambientLight intensity={0.1} />
-        <directionalLight />
+      <Canvas camera={{ position: [0, 0, 1] }}>
+        {/* <OrbitControls /> */}
+        {/* <axesHelper /> */}
+        {/* <ambientLight intensity={0.1} /> */}
+        {/* <directionalLight /> */}
         <TextTunnel
           stringToType={stringToType}
           currentIndex={currentIndex}

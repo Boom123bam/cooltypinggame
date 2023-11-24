@@ -12,7 +12,7 @@ const MovingText: React.FC<{
     if (textRef.current)
       textRef.current.addEventListener("synccomplete", () => {
         gsap.to(textRef.current.position, {
-          duration: 5,
+          duration: 3,
           z: textRef.current.textRenderInfo.blockBounds[2],
         });
       });

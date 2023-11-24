@@ -1,9 +1,42 @@
 body {
   background-color: black;
+  color: white;
 }
 
 #root {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.text-display {
+  width: 15rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .word {
+    display: flex;
+  }
+
+  .char.empty {
+    display: inline-block;
+    width: 1ch;
+    height: 100%;
+  }
+
+  .word.typed,
+  .char.typed {
+    color: gray;
+  }
+  .char.typing {
+    position: relative;
+  }
+  .char.typing:before {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    background-color: white;
+  }
 }

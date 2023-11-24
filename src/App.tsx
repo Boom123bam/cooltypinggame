@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { getRandomWordList } from "./modules/database";
-import WordDisplayer from "./components/WordDisplayer";
+import TextDisplay from "./components/TextDisplay";
 import "./App.css";
 import GameCanvas from "./components/GameCanvas";
 
 function App() {
-  const [stringToType, setStringToType] = useState("");
+  const [allWords, setallWords] = useState<string[]>([]);
   const [typingWordIndex, setTypingWordIndex] = useState(0);
   const [updateKey, setUpdateKey] = useState(false);
   const lastKeyRef = useRef("");
@@ -23,10 +23,12 @@ function App() {
 
     const updateStringToType = async () => {
       const wordList = await getRandomWordList(10);
-      setStringToType(stringToType + wordList.join(" "));
+      setallWords(allWords.concat(wordList));
     };
     updateStringToType();
   }, []);
+
+  const stringToType = allWords.join(" ");
 
   // key press listener
   useEffect(() => {
@@ -48,8 +50,8 @@ function App() {
 
   return (
     <>
-      <WordDisplayer
-        stringToType={stringToType}
+      <TextDisplay
+        allWords={allWords}
         currentIndex={typingWordIndex}
       />
       <GameCanvas
