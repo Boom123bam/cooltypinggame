@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import MovingText from "./MovingText";
+import TextTunnel from "./TextTunnnel";
 
 // "node_modules/three/examples/fonts/droid/droid_serif_regular.typeface.json"
 
@@ -25,7 +25,7 @@ const GameCanvas: React.FC<{
         <axesHelper />
         <ambientLight intensity={0.1} />
         <directionalLight />
-        <MovingText
+        <TextTunnel
           stringToType={stringToType}
           currentIndex={currentIndex}
         />

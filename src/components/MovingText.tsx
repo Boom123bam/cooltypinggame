@@ -1,6 +1,6 @@
 import { Text } from "@react-three/drei";
 import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const MovingText: React.FC<{
   stringToType: string;
@@ -13,7 +13,7 @@ const MovingText: React.FC<{
       textRef.current.addEventListener("synccomplete", () => {
         gsap.to(textRef.current.position, {
           duration: 5,
-          x: -textRef.current.textRenderInfo.blockBounds[2],
+          z: textRef.current.textRenderInfo.blockBounds[2],
         });
       });
   }, [textRef]);
@@ -23,6 +23,8 @@ const MovingText: React.FC<{
       ref={textRef}
       font={"fonts/VinaSans-Regular.ttf"}
       anchorX={"left"}
+      position={[-1, 0, 0]}
+      rotation={[0, Math.PI / 2, 0]}
     >
       {stringToType.slice(0, currentIndex)}
     </Text>
