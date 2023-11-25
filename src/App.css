@@ -1,6 +1,7 @@
 body {
   background-color: black;
   color: white;
+  font-family: "JetBrains Mono", monospace;
 }
 
 #root {
