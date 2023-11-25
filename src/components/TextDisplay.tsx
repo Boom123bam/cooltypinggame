@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import Word from "./Word";
 
 const TextDisplay: React.FC<{
@@ -9,6 +9,29 @@ const TextDisplay: React.FC<{
   const currentWordRef = useRef<HTMLElement | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const checkScrollRef = useRef(true);
+  const [showCursor, setShowCursor] = useState(true);
+  const cursorTimeoutRef = useRef<number | null>(null);
+
+  // make cursor flash
+  useEffect(() => {
+    if (cursorTimeoutRef.current) return;
+    cursorTimeoutRef.current = setTimeout(() => {
+      setShowCursor((current) => !current);
+      cursorTimeoutRef.current = null;
+    }, 500);
+  }, [showCursor]);
+
+  // set cursor to show on letter type
+  useEffect(() => {
+    if (cursorTimeoutRef.current)
+      clearTimeout(cursorTimeoutRef.current);
+    setShowCursor(true);
+
+    cursorTimeoutRef.current = setTimeout(() => {
+      setShowCursor((current) => !current);
+      cursorTimeoutRef.current = null;
+    }, 500);
+  }, [typingCharIndex]);
 
   useEffect(() => {
     if (!checkScrollRef.current) return;
@@ -35,7 +58,9 @@ const TextDisplay: React.FC<{
 
   return (
     <>
-      <div className="text-display">
+      <div
+        className={`text-display${showCursor ? " show-cursor" : ""}`}
+      >
         <div className="scroller" ref={scrollerRef}>
           {allWords.map((word, i) => (
             <WordMemo

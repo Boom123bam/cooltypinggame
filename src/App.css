@@ -46,12 +46,12 @@ body {
 
   .word.typed,
   .char.typed {
-    color: gray;
+    color: #424242;
   }
   .char.typing {
     position: relative;
   }
-  .char.typing:before {
+  &.show-cursor .char.typing:before {
     content: "";
     position: absolute;
     width: 100%;
