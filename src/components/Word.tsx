@@ -13,7 +13,7 @@ const Word = forwardRef<HTMLSpanElement | null, WordProps>(
       word: string,
       charIndexRelativeToWord: number | null = null
     ) {
-      const chars = word.split("");
+      const chars = (word + " ").split("");
       if (charIndexRelativeToWord == null) {
         return chars.map((char, i) => (
           <span className="char" key={i}>
@@ -45,13 +45,6 @@ const Word = forwardRef<HTMLSpanElement | null, WordProps>(
           isTyped ? "typed" : isTyping ? "typing" : "not-typed"
         }`}
       >
-        <span
-          className={`char empty${
-            isTyping && currentCharIndex == -1 ? " typing" : ""
-          }`}
-        >
-          {" "}
-        </span>
         {isTyping
           ? createSpans(word, currentCharIndex)
           : createSpans(word)}

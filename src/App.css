@@ -24,7 +24,7 @@ body {
     display: flex;
   }
 
-  .char.empty {
+  .char:last-child {
     display: inline-block;
     width: 1ch;
     height: 100%;
