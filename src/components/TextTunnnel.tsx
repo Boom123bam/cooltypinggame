@@ -2,10 +2,9 @@ import { Dispatch, SetStateAction } from "react";
 import MovingText from "./MovingText";
 
 const TextTunnel: React.FC<{
-  stringToType: string;
-  currentIndex: number;
+  typedString: string;
   setTunnelLength: Dispatch<SetStateAction<number>>;
-}> = ({ stringToType, currentIndex, setTunnelLength }) => {
+}> = ({ typedString, setTunnelLength }) => {
   const edges = 8; // Adjust the number of instances as needed
 
   return (
@@ -13,8 +12,7 @@ const TextTunnel: React.FC<{
       {/* only one instance of movingtext sets tunnel length */}
       <group rotation={[0, 0, 0]}>
         <MovingText
-          stringToType={stringToType}
-          currentIndex={currentIndex}
+          typedString={typedString}
           setTunnelLength={setTunnelLength}
         />
       </group>
@@ -25,8 +23,7 @@ const TextTunnel: React.FC<{
           rotation={[0, 0, ((Math.PI * 2) / edges) * (index + 1)]}
         >
           <MovingText
-            stringToType={stringToType}
-            currentIndex={currentIndex}
+            typedString={typedString}
             setTunnelLength={null}
           />
         </group>

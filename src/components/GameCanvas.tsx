@@ -43,8 +43,7 @@ const GameCanvas: React.FC<{
         {/* <ambientLight intensity={0.1} /> */}
         {/* <directionalLight /> */}
         <TextTunnel
-          stringToType={stringToType}
-          currentIndex={currentIndex}
+          typedString={stringToType.slice(0, currentIndex)}
           setTunnelLength={setTunnelLength}
         />
       </Canvas>
