@@ -13,22 +13,25 @@ function TypingGame() {
 
   const [updateKey, setUpdateKey] = useState(false);
   const lastKeyRef = useRef("");
+  const updatingWordsRef = useRef(false);
 
   const handleKeyDown = (e: KeyboardEvent) => {
     lastKeyRef.current = e.key;
     setUpdateKey(!updateKey);
   };
 
+  const updateWords = async () => {
+    updatingWordsRef.current = true;
+    const wordList = await getRandomWordList(50);
+    setallWords(allWords.concat(wordList));
+    updatingWordsRef.current = false;
+  };
   useEffect(() => {
     // Add event listener when the component mounts
     document.addEventListener("keydown", handleKeyDown, {
       once: true,
     });
 
-    const updateWords = async () => {
-      const wordList = await getRandomWordList(10);
-      setallWords(allWords.concat(wordList));
-    };
     updateWords();
   }, []);
 
@@ -36,6 +39,7 @@ function TypingGame() {
 
   // key press listener
   useEffect(() => {
+    // update state according to char typed
     if (
       stringToType[typingState.totalTypingCharIndex] ==
       lastKeyRef.current
@@ -65,6 +69,14 @@ function TypingGame() {
       once: true,
     });
   }, [updateKey]);
+
+  useEffect(() => {
+    // fetch words almost all words typed
+    if (updatingWordsRef.current) return;
+    if (typingState.typingWordIndex > allWords.length - 15) {
+      updateWords();
+    }
+  }, [typingState.typingWordIndex]);
 
   return (
     <>
