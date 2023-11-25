@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+// import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import TextTunnel from "./TextTunnnel";
 
 // "node_modules/three/examples/fonts/droid/droid_serif_regular.typeface.json"
