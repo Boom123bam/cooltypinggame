@@ -15,12 +15,15 @@ const Word = forwardRef<HTMLSpanElement | null, WordProps>(
     ) {
       const chars = word.split("");
       if (charIndexRelativeToWord == null) {
-        return chars.map((char) => (
-          <span className="char">{char}</span>
+        return chars.map((char, i) => (
+          <span className="char" key={i}>
+            {char}
+          </span>
         ));
       } else
         return chars.map((char, index) => (
           <span
+            key={index}
             className={`char 
             ${
               index < charIndexRelativeToWord

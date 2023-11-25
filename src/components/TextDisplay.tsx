@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import Word from "./Word";
 
 const TextDisplay: React.FC<{
@@ -65,22 +65,23 @@ const TextDisplay: React.FC<{
       <div className="text-display">
         <div className="scroller" ref={scrollerRef}>
           {allWords.map((word, i) => (
-            <>
-              <Word
-                word={word}
-                isTyped={i < typingWordIndex}
-                isTyping={i == typingWordIndex}
-                currentCharIndex={
-                  i == typingWordIndex ? charIndexRelativeToWord : -1
-                }
-                ref={i == typingWordIndex ? currentWordRef : null}
-              />
-            </>
+            <WordMemo
+              key={i}
+              word={word}
+              isTyped={i < typingWordIndex}
+              isTyping={i == typingWordIndex}
+              currentCharIndex={
+                i == typingWordIndex ? charIndexRelativeToWord : -1
+              }
+              ref={i == typingWordIndex ? currentWordRef : null}
+            />
           ))}
         </div>
       </div>
     </>
   );
 };
+
+const WordMemo = memo(Word);
 
 export default TextDisplay;
