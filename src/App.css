@@ -11,13 +11,13 @@ body {
 
 .text-display {
   width: 15rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 
   .scroller {
     translate: 0 var(--depth);
     transition: translate 0.5s;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .word {
