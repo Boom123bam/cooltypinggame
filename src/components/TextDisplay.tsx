@@ -6,7 +6,7 @@ const TextDisplay: React.FC<{
   currentIndex: number;
 }> = ({ allWords, currentIndex }) => {
   const currentWordRef = useRef<HTMLElement | null>(null);
-  const scrollerRef = useRef<HTMLElement | null>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
   const checkScrollRef = useRef(true);
 
   useEffect(() => {
