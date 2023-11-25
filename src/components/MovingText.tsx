@@ -1,21 +1,22 @@
 import { Text } from "@react-three/drei";
-import gsap from "gsap";
-import { useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 
 const MovingText: React.FC<{
   stringToType: string;
   currentIndex: number;
-}> = ({ stringToType, currentIndex }) => {
+  setTunnelLength: Dispatch<SetStateAction<number>> | null;
+}> = ({ stringToType, currentIndex, setTunnelLength }) => {
   const textRef = useRef<any>();
 
   useEffect(() => {
-    if (textRef.current)
-      textRef.current.addEventListener("synccomplete", () => {
-        gsap.to(textRef.current.position, {
-          duration: 3,
-          z: textRef.current.textRenderInfo.blockBounds[2],
+    if (setTunnelLength) {
+      if (textRef.current)
+        textRef.current.addEventListener("synccomplete", () => {
+          setTunnelLength(
+            textRef.current.textRenderInfo.blockBounds[2]
+          );
         });
-      });
+    }
   }, [textRef]);
 
   return (

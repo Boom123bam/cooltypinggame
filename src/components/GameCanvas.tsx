@@ -1,13 +1,29 @@
-import { Canvas } from "@react-three/fiber";
-// import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { Canvas, useThree } from "@react-three/fiber";
 import TextTunnel from "./TextTunnnel";
+import { FC, useRef, useState } from "react";
+import gsap from "gsap";
 
-// "node_modules/three/examples/fonts/droid/droid_serif_regular.typeface.json"
+interface CameraControlsProps {
+  zPos: number;
+}
+
+const CameraControls: FC<CameraControlsProps> = ({ zPos }) => {
+  // Access the camera
+  const { camera } = useThree();
+  gsap.to(camera.position, {
+    z: zPos,
+    duration: 3,
+  });
+
+  return null;
+};
 
 const GameCanvas: React.FC<{
   stringToType: string;
   currentIndex: number;
 }> = ({ stringToType, currentIndex }) => {
+  const [tunnelLength, setTunnelLength] = useState(0);
+  const canvasRef = useRef(null);
   return (
     <div
       className="canvas-container"
@@ -20,7 +36,8 @@ const GameCanvas: React.FC<{
         zIndex: -1,
       }}
     >
-      <Canvas camera={{ position: [0, 0, 1] }}>
+      <Canvas ref={canvasRef}>
+        <CameraControls zPos={3 - tunnelLength}></CameraControls>
         {/* <OrbitControls /> */}
         {/* <axesHelper /> */}
         {/* <ambientLight intensity={0.1} /> */}
@@ -28,6 +45,7 @@ const GameCanvas: React.FC<{
         <TextTunnel
           stringToType={stringToType}
           currentIndex={currentIndex}
+          setTunnelLength={setTunnelLength}
         />
       </Canvas>
     </div>
