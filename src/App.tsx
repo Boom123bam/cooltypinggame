@@ -26,11 +26,11 @@ function App() {
       once: true,
     });
 
-    const updateStringToType = async () => {
+    const updateWords = async () => {
       const wordList = await getRandomWordList(10);
       setallWords(allWords.concat(wordList));
     };
-    updateStringToType();
+    updateWords();
   }, []);
 
   const stringToType = allWords.join(" ");
@@ -71,7 +71,8 @@ function App() {
     <>
       <TextDisplay
         allWords={allWords}
-        currentIndex={typingState.totalTypingCharIndex}
+        typingWordIndex={typingState.typingWordIndex}
+        typingCharIndex={typingState.typingCharIndex}
       />
       <GameCanvas
         stringToType={stringToType}
