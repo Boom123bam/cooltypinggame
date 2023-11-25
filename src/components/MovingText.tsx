@@ -1,12 +1,12 @@
 import { Text } from "@react-three/drei";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, FC, SetStateAction, memo, useEffect } from "react";
 
-const MovingText: React.FC<{
+const letterWidth = 1;
+
+const MovingText: FC<{
   typedString: string;
   setTunnelLength: Dispatch<SetStateAction<number>> | null;
 }> = ({ typedString, setTunnelLength }) => {
-  const letterWidth = 0.75;
-
   useEffect(() => {
     if (setTunnelLength) {
       setTunnelLength(letterWidth * typedString.length);
@@ -15,19 +15,29 @@ const MovingText: React.FC<{
 
   return (
     <group>
-      {typedString.split("").map((letter, i) => (
-        <Text
-          key={i}
-          font={"fonts/Astronomic-Mono.ttf"}
-          anchorX={"left"}
-          position={[-1, 0, -i * letterWidth]}
-          rotation={[0, Math.PI / 2, 0]}
-        >
-          {letter}
-        </Text>
+      {typedString.split("").map((letter, index) => (
+        <Char3dMemo key={index} letter={letter} index={index} />
       ))}
     </group>
   );
 };
+
+const Char3d: FC<{
+  letter: string;
+  index: number;
+}> = ({ letter, index }) => {
+  return (
+    <Text
+      font={"fonts/Astronomic-Mono.ttf"}
+      anchorX={"left"}
+      position={[-1, 0, -index * letterWidth]}
+      rotation={[0, Math.PI / 2, 0]}
+    >
+      {letter}
+    </Text>
+  );
+};
+
+const Char3dMemo = memo(Char3d);
 
 export default MovingText;
