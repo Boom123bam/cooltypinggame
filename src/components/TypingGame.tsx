@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { getRandomWordList } from "../modules/database";
 import TextDisplay from "../components/TextDisplay";
 import GameCanvas from "../components/GameCanvas";
@@ -85,7 +85,7 @@ function TypingGame() {
         typingWordIndex={typingState.typingWordIndex}
         typingCharIndex={typingState.typingCharIndex}
       />
-      <GameCanvas
+      <GameCanvasMemo
         stringToType={stringToType}
         currentIndex={typingState.totalTypingCharIndex}
       />
@@ -93,4 +93,5 @@ function TypingGame() {
   );
 }
 
+const GameCanvasMemo = memo(GameCanvas);
 export default TypingGame;
