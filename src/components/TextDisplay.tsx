@@ -1,3 +1,5 @@
+import Word from "./Word";
+
 const TextDisplay: React.FC<{
   allWords: string[];
   currentIndex: number;
@@ -27,32 +29,6 @@ const TextDisplay: React.FC<{
     };
   }
 
-  function createSpans(
-    word: string,
-    charIndexRelativeToWord: number | null = null
-  ) {
-    const chars = word.split("");
-    if (charIndexRelativeToWord == null) {
-      return chars.map((char) => (
-        <span className="char">{char}</span>
-      ));
-    } else
-      return chars.map((char, index) => (
-        <span
-          className={`char 
-            ${
-              index < charIndexRelativeToWord
-                ? "typed"
-                : index == charIndexRelativeToWord
-                ? "typing"
-                : "to-type"
-            }`}
-        >
-          {char}
-        </span>
-      ));
-  }
-
   const { typingWordIndex, charIndexRelativeToWord } =
     findWordAndIndex(allWords, currentIndex);
   console.log(currentIndex, typingWordIndex, charIndexRelativeToWord);
@@ -62,29 +38,14 @@ const TextDisplay: React.FC<{
       <div className="text-display">
         {allWords.map((word, i) => (
           <>
-            <span
-              className={`word ${
-                i < typingWordIndex
-                  ? "typed"
-                  : i == typingWordIndex
-                  ? "typing"
-                  : "to-type"
-              }`}
-            >
-              <span
-                className={`char empty${
-                  typingWordIndex == i &&
-                  charIndexRelativeToWord == -1
-                    ? " typing"
-                    : ""
-                }`}
-              >
-                {" "}
-              </span>
-              {i == typingWordIndex
-                ? createSpans(word, charIndexRelativeToWord)
-                : createSpans(word)}
-            </span>
+            <Word
+              word={word}
+              isTyped={i < typingWordIndex}
+              isTyping={i == typingWordIndex}
+              currentCharIndex={
+                i == typingWordIndex ? charIndexRelativeToWord : -1
+              }
+            />
           </>
         ))}
       </div>
