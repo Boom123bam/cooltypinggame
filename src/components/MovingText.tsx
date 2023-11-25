@@ -1,5 +1,13 @@
 import { Text } from "@react-three/drei";
-import { Dispatch, FC, SetStateAction, memo, useEffect } from "react";
+import gsap from "gsap";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  memo,
+  useEffect,
+  useRef,
+} from "react";
 
 const letterWidth = 0.75;
 const maxCharsToShow = 25;
@@ -30,8 +38,20 @@ const Char3d: FC<{
   letter: string;
   index: number;
 }> = ({ letter, index }) => {
+  const textRef = useRef<any>(null);
+  useEffect(() => {
+    gsap.to(textRef.current.position, {
+      x: -1.2,
+      duration: 0.2,
+    });
+    gsap.to(textRef.current, {
+      fillOpacity: 0.1,
+      duration: 1,
+    });
+  });
   return (
     <Text
+      ref={textRef}
       font={"fonts/Astronomic-Mono.ttf"}
       anchorX={"left"}
       position={[-1, 0, -index * letterWidth]}
