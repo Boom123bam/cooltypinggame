@@ -15,6 +15,11 @@ body {
   flex-wrap: wrap;
   justify-content: center;
 
+  .scroller {
+    translate: 0 var(--depth);
+    transition: translate 0.5s;
+  }
+
   .word {
     display: flex;
   }
@@ -35,8 +40,10 @@ body {
   .char.typing:before {
     content: "";
     position: absolute;
-    width: 1px;
+    width: 100%;
     height: 100%;
     background-color: white;
+    background-blend-mode: multiply;
+    mix-blend-mode: difference;
   }
 }

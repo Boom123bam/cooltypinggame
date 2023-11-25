@@ -1,9 +1,9 @@
-const Word: React.FC<{
-  word: string;
-  isTyped: boolean;
-  isTyping: boolean;
-  currentCharIndex: number; // -1 if none
-}> = ({ word, isTyped, isTyping, currentCharIndex }) => {
+import { forwardRef } from "react";
+
+const Word = forwardRef(function Word(
+  { word, isTyped, isTyping, currentCharIndex },
+  ref
+) {
   function createSpans(
     word: string,
     charIndexRelativeToWord: number | null = null
@@ -32,6 +32,7 @@ const Word: React.FC<{
 
   return (
     <span
+      ref={ref}
       className={`word ${
         isTyped ? "typed" : isTyping ? "typing" : "not-typed"
       }`}
@@ -48,6 +49,6 @@ const Word: React.FC<{
         : createSpans(word)}
     </span>
   );
-};
+});
 
 export default Word;

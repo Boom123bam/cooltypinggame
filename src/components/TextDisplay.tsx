@@ -1,9 +1,37 @@
+import { useEffect, useRef } from "react";
 import Word from "./Word";
 
 const TextDisplay: React.FC<{
   allWords: string[];
   currentIndex: number;
 }> = ({ allWords, currentIndex }) => {
+  const currentWordRef = useRef<HTMLElement | null>(null);
+  const scrollerRef = useRef<HTMLElement | null>(null);
+  const checkScrollRef = useRef(true);
+
+  useEffect(() => {
+    if (!checkScrollRef.current) return;
+
+    checkScrollRef.current = false;
+    setTimeout(() => {
+      checkScrollRef.current = true;
+    }, 500);
+
+    // update scroll
+    if (currentWordRef.current && scrollerRef.current) {
+      const scrollerTop =
+        scrollerRef.current.getBoundingClientRect().top;
+
+      const wordTop =
+        currentWordRef.current.getBoundingClientRect().top;
+
+      scrollerRef.current.style.setProperty(
+        "--depth",
+        `${scrollerTop - wordTop}px`
+      );
+    }
+  });
+
   function findWordAndIndex(words: string[], totalCharIndex: number) {
     let currentCharIndex = 0;
 
@@ -31,23 +59,25 @@ const TextDisplay: React.FC<{
 
   const { typingWordIndex, charIndexRelativeToWord } =
     findWordAndIndex(allWords, currentIndex);
-  console.log(currentIndex, typingWordIndex, charIndexRelativeToWord);
 
   return (
     <>
       <div className="text-display">
-        {allWords.map((word, i) => (
-          <>
-            <Word
-              word={word}
-              isTyped={i < typingWordIndex}
-              isTyping={i == typingWordIndex}
-              currentCharIndex={
-                i == typingWordIndex ? charIndexRelativeToWord : -1
-              }
-            />
-          </>
-        ))}
+        <div className="scroller" ref={scrollerRef}>
+          {allWords.map((word, i) => (
+            <>
+              <Word
+                word={word}
+                isTyped={i < typingWordIndex}
+                isTyping={i == typingWordIndex}
+                currentCharIndex={
+                  i == typingWordIndex ? charIndexRelativeToWord : -1
+                }
+                ref={i == typingWordIndex ? currentWordRef : null}
+              />
+            </>
+          ))}
+        </div>
       </div>
     </>
   );
