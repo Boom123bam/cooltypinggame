@@ -8,7 +8,6 @@ const TextDisplay: React.FC<{
 }> = ({ allWords, typingWordIndex, typingCharIndex }) => {
   const currentWordRef = useRef<HTMLElement | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const checkScrollRef = useRef(true);
   const [showCursor, setShowCursor] = useState(true);
   const cursorTimeoutRef = useRef<number | null>(null);
 
@@ -34,13 +33,6 @@ const TextDisplay: React.FC<{
   }, [typingCharIndex]);
 
   useEffect(() => {
-    if (!checkScrollRef.current) return;
-
-    checkScrollRef.current = false;
-    setTimeout(() => {
-      checkScrollRef.current = true;
-    }, 500);
-
     // update scroll
     if (currentWordRef.current && scrollerRef.current) {
       const scrollerTop =
@@ -54,7 +46,7 @@ const TextDisplay: React.FC<{
         `${scrollerTop - wordTop}px`
       );
     }
-  });
+  }, [typingWordIndex]);
 
   return (
     <>
