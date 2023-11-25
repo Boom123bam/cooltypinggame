@@ -1,7 +1,8 @@
 import { Text } from "@react-three/drei";
 import { Dispatch, FC, SetStateAction, memo, useEffect } from "react";
 
-const letterWidth = 1;
+const letterWidth = 0.75;
+const maxCharsToShow = 25;
 
 const MovingText: FC<{
   typedString: string;
@@ -15,9 +16,12 @@ const MovingText: FC<{
 
   return (
     <group>
-      {typedString.split("").map((letter, index) => (
-        <Char3dMemo key={index} letter={letter} index={index} />
-      ))}
+      {typedString.split("").map((letter, index) => {
+        if (index > typedString.length - maxCharsToShow - 1)
+          return (
+            <Char3dMemo key={index} letter={letter} index={index} />
+          );
+      })}
     </group>
   );
 };
