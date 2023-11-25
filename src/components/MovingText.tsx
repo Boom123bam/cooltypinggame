@@ -6,7 +6,7 @@ const MovingText: React.FC<{
   stringToType: string;
   currentIndex: number;
 }> = ({ stringToType, currentIndex }) => {
-  const textRef = useRef();
+  const textRef = useRef<any>();
 
   useEffect(() => {
     if (textRef.current)
