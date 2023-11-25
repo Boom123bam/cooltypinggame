@@ -6,7 +6,12 @@ import GameCanvas from "./components/GameCanvas";
 
 function App() {
   const [allWords, setallWords] = useState<string[]>([]);
-  const [typingWordIndex, setTypingWordIndex] = useState(0);
+  const [typingState, setTypingState] = useState({
+    totalTypingCharIndex: 0,
+    typingWordIndex: 0,
+    typingCharIndex: 0,
+  });
+
   const [updateKey, setUpdateKey] = useState(false);
   const lastKeyRef = useRef("");
 
@@ -32,15 +37,29 @@ function App() {
 
   // key press listener
   useEffect(() => {
-    if (stringToType[typingWordIndex] == lastKeyRef.current) {
-      // if (lastKeyRef.current == " ") {
-      //   // clear typed word
-      //   setStringToType(stringToType.slice(typingWordIndex + 1));
-      //   setTypingWordIndex(0);
-      // } else {
-      //   setTypingWordIndex(typingWordIndex + 1);
-      // }
-      setTypingWordIndex(typingWordIndex + 1);
+    if (
+      stringToType[typingState.totalTypingCharIndex] ==
+      lastKeyRef.current
+    ) {
+      const goNextWord =
+        typingState.typingCharIndex ==
+        allWords[typingState.typingWordIndex].length;
+
+      if (goNextWord) {
+        setTypingState((currentTypingState) => ({
+          typingWordIndex: currentTypingState.typingWordIndex + 1,
+          totalTypingCharIndex:
+            currentTypingState.totalTypingCharIndex + 1,
+          typingCharIndex: 0,
+        }));
+      } else {
+        setTypingState((currentTypingState) => ({
+          ...currentTypingState,
+          totalTypingCharIndex:
+            currentTypingState.totalTypingCharIndex + 1,
+          typingCharIndex: currentTypingState.typingCharIndex + 1,
+        }));
+      }
     }
 
     document.addEventListener("keydown", handleKeyDown, {
@@ -52,11 +71,11 @@ function App() {
     <>
       <TextDisplay
         allWords={allWords}
-        currentIndex={typingWordIndex}
+        currentIndex={typingState.totalTypingCharIndex}
       />
       <GameCanvas
         stringToType={stringToType}
-        currentIndex={typingWordIndex}
+        currentIndex={typingState.totalTypingCharIndex}
       />
     </>
   );
