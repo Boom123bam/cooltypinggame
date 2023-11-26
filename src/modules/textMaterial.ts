@@ -5,13 +5,17 @@ const uniformData = {
     type: "f",
     value: 0,
   },
+  distance: {
+    type: "f",
+    value: 0,
+  },
 };
 
 const textMaterial = new ShaderMaterial({
   // wireframe: true,
   uniforms: uniformData,
   vertexShader: `
-  uniform float u_time;
+  // uniform float u_time;
   // varying vec2 vUv;
   varying float zPos;
   varying float waveHeight;
@@ -34,7 +38,8 @@ const textMaterial = new ShaderMaterial({
 `,
   fragmentShader: `
   // varying vec2 vUv;
-  uniform float u_time;
+  // uniform float u_time;
+  uniform float distance;
   varying float zPos;
   varying float waveHeight;
 
@@ -46,7 +51,7 @@ const textMaterial = new ShaderMaterial({
   }
 
   void main(){
-    vec3 color = hsl2rgb(vec3(zPos * .2 + u_time, 1, 0.9));
+    vec3 color = hsl2rgb(vec3(zPos * .2 + distance * .3, 1, 0.9));
     // color.rg *= .5 + .5 * sin(zPos * 3.);
 
     gl_FragColor = vec4(color,1.0);

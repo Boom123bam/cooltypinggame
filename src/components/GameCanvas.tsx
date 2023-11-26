@@ -31,6 +31,8 @@ const Scene: FC<CameraControlsProps> = ({
       timeRef.current += 0.01;
 
       textMaterialRef.current.uniforms.u_time.value = timeRef.current;
+      textMaterialRef.current.uniforms.distance.value =
+        gsap.getProperty(camera.position, "z");
 
       requestAnimationFrame(animate);
     };
