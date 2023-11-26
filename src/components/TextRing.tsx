@@ -1,52 +1,43 @@
 import { Text } from "@react-three/drei";
 import gsap from "gsap";
-import {
-  Dispatch,
-  FC,
-  MutableRefObject,
-  SetStateAction,
-  memo,
-  useEffect,
-  useRef,
-} from "react";
-import { ShaderMaterial } from "three";
+import { FC, MutableRefObject, memo, useEffect, useRef } from "react";
+import { Group, ShaderMaterial } from "three";
 
+const edges = 8;
 const letterWidth = 0.7;
-const maxCharsToShow = 25;
 
-const MovingText: FC<{
-  typedString: string;
-  setTunnelLength: Dispatch<SetStateAction<number>> | null;
+const TextRing: FC<{
+  letter: string;
+  index: number;
   textMaterialRef: MutableRefObject<ShaderMaterial>;
-}> = ({ typedString, setTunnelLength, textMaterialRef }) => {
+}> = ({ letter, textMaterialRef, index }) => {
+  const groupRef = useRef<Group>(null);
   useEffect(() => {
-    if (setTunnelLength) {
-      setTunnelLength(letterWidth * typedString.length);
-    }
-  }, [typedString]);
-
+    if (groupRef.current) groupRef.current.rotation.z = index * 0.15;
+  });
   return (
-    <group>
-      {typedString.split("").map((letter, index) => {
-        if (index > typedString.length - maxCharsToShow - 1)
-          return (
+    <>
+      <group position={[0, 0, -index * letterWidth]} ref={groupRef}>
+        {Array.from({ length: edges }).map((_, index) => (
+          <group
+            key={index}
+            rotation={[0, 0, ((Math.PI * 2) / edges) * index]}
+          >
             <Char3dMemo
-              key={index}
               letter={letter}
-              index={index}
               textMaterialRef={textMaterialRef}
             />
-          );
-      })}
-    </group>
+          </group>
+        ))}
+      </group>
+    </>
   );
 };
 
 const Char3d: FC<{
   letter: string;
-  index: number;
   textMaterialRef: MutableRefObject<ShaderMaterial>;
-}> = ({ letter, index, textMaterialRef }) => {
+}> = ({ letter, textMaterialRef }) => {
   const textRef = useRef<any>(null);
   useEffect(() => {
     gsap.to(textRef.current.position, {
@@ -80,11 +71,7 @@ const Char3d: FC<{
       ref={textRef}
       font={"fonts/Astronomic-Mono.ttf"}
       anchorX={"left"}
-      position={[
-        -2.5,
-        (Math.random() - 0.5) * 3,
-        -index * letterWidth,
-      ]}
+      position={[-2.5, (Math.random() - 0.5) * 3, 0]}
       rotation={[
         // (Math.random() - 0.5) * 3,
         0,
@@ -101,4 +88,4 @@ const Char3d: FC<{
 
 const Char3dMemo = memo(Char3d);
 
-export default MovingText;
+export default TextRing;
