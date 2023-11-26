@@ -6,27 +6,24 @@ import textMaterial from "../modules/textMaterial";
 import { cameraDist, cameraMoveDuration } from "../modules/constants";
 
 interface CameraControlsProps {
-  zPos: number;
+  stringToType: string;
+  currentIndex: number;
 }
 
-const CameraControls: FC<CameraControlsProps> = ({ zPos }) => {
+const Scene: FC<CameraControlsProps> = ({
+  stringToType,
+  currentIndex,
+}) => {
+  const [tunnelLength, setTunnelLength] = useState(0);
+  const textMaterialRef = useRef(textMaterial);
+  const timeRef = useRef(0);
+
   // Access the camera
   const { camera } = useThree();
   gsap.to(camera.position, {
-    z: zPos,
+    z: cameraDist - tunnelLength,
     duration: cameraMoveDuration,
   });
-  return null;
-};
-
-const GameCanvas: React.FC<{
-  stringToType: string;
-  currentIndex: number;
-}> = ({ stringToType, currentIndex }) => {
-  const [tunnelLength, setTunnelLength] = useState(0);
-  const canvasRef = useRef(null);
-  const timeRef = useRef(0);
-  const textMaterialRef = useRef(textMaterial);
 
   useEffect(() => {
     // Start the animation loop when the component mounts
@@ -42,6 +39,19 @@ const GameCanvas: React.FC<{
   }, []);
 
   return (
+    <TextTunnel
+      typedString={stringToType.slice(0, currentIndex)}
+      setTunnelLength={setTunnelLength}
+      textMaterialRef={textMaterialRef}
+    />
+  );
+};
+
+const GameCanvas: React.FC<{
+  stringToType: string;
+  currentIndex: number;
+}> = ({ stringToType, currentIndex }) => {
+  return (
     <div
       className="canvas-container"
       style={{
@@ -53,18 +63,10 @@ const GameCanvas: React.FC<{
         zIndex: -1,
       }}
     >
-      <Canvas ref={canvasRef}>
-        <CameraControls
-          zPos={cameraDist - tunnelLength}
-        ></CameraControls>
-        {/* <OrbitControls /> */}
-        {/* <axesHelper /> */}
-        {/* <ambientLight intensity={0.1} /> */}
-        {/* <directionalLight /> */}
-        <TextTunnel
-          typedString={stringToType.slice(0, currentIndex)}
-          setTunnelLength={setTunnelLength}
-          textMaterialRef={textMaterialRef}
+      <Canvas>
+        <Scene
+          stringToType={stringToType}
+          currentIndex={currentIndex}
         />
       </Canvas>
     </div>
