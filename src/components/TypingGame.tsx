@@ -28,7 +28,7 @@ function TypingGame() {
   };
   useEffect(() => {
     // Add event listener when the component mounts
-    document.addEventListener("keydown", handleKeyDown, {
+    document.addEventListener("keypress", handleKeyDown, {
       once: true,
     });
 
@@ -42,7 +42,8 @@ function TypingGame() {
     // update state according to char typed
     if (
       stringToType[typingState.totalTypingCharIndex] ==
-      lastKeyRef.current
+        lastKeyRef.current ||
+      lastKeyRef.current == "Enter"
     ) {
       const goNextWord =
         typingState.typingCharIndex ==
@@ -65,7 +66,7 @@ function TypingGame() {
       }
     }
 
-    document.addEventListener("keydown", handleKeyDown, {
+    document.addEventListener("keypress", handleKeyDown, {
       once: true,
     });
   }, [updateKey]);
