@@ -62,7 +62,7 @@ const GameCanvas: React.FC<{
         width: "100%",
         top: 0,
         left: 0,
-        zIndex: -1,
+        zIndex: -100,
       }}
     >
       <Canvas>
