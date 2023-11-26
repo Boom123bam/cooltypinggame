@@ -2,9 +2,7 @@ import { Text } from "@react-three/drei";
 import gsap from "gsap";
 import { FC, MutableRefObject, memo, useEffect, useRef } from "react";
 import { Group, ShaderMaterial } from "three";
-
-const edges = 8;
-const letterWidth = 0.7;
+import { letterWidth, numTunnelEdges } from "../modules/constants";
 
 const TextRing: FC<{
   letter: string;
@@ -18,10 +16,14 @@ const TextRing: FC<{
   return (
     <>
       <group position={[0, 0, -index * letterWidth]} ref={groupRef}>
-        {Array.from({ length: edges }).map((_, index) => (
+        {Array.from({ length: numTunnelEdges }).map((_, index) => (
           <group
             key={index}
-            rotation={[0, 0, ((Math.PI * 2) / edges) * index]}
+            rotation={[
+              0,
+              0,
+              ((Math.PI * 2) / numTunnelEdges) * index,
+            ]}
           >
             <Char3dMemo
               letter={letter}

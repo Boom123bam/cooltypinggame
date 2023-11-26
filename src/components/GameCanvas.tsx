@@ -3,6 +3,7 @@ import TextTunnel from "./TextTunnnel";
 import { FC, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import textMaterial from "../modules/textMaterial";
+import { cameraDist, cameraMoveDuration } from "../modules/constants";
 
 interface CameraControlsProps {
   zPos: number;
@@ -13,9 +14,8 @@ const CameraControls: FC<CameraControlsProps> = ({ zPos }) => {
   const { camera } = useThree();
   gsap.to(camera.position, {
     z: zPos,
-    duration: 3,
+    duration: cameraMoveDuration,
   });
-
   return null;
 };
 
@@ -54,7 +54,9 @@ const GameCanvas: React.FC<{
       }}
     >
       <Canvas ref={canvasRef}>
-        <CameraControls zPos={3 - tunnelLength}></CameraControls>
+        <CameraControls
+          zPos={cameraDist - tunnelLength}
+        ></CameraControls>
         {/* <OrbitControls /> */}
         {/* <axesHelper /> */}
         {/* <ambientLight intensity={0.1} /> */}
