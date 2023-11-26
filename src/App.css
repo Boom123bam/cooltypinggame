@@ -14,6 +14,7 @@ body {
   --rows: 3;
   --height: 4rem;
   --line-height: calc(var(--height) / var(--rows));
+  mix-blend-mode: difference;
   width: 15rem;
   height: var(--height);
   line-height: var(--line-height);
