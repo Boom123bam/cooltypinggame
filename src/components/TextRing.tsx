@@ -2,7 +2,11 @@ import { Text } from "@react-three/drei";
 import gsap from "gsap";
 import { FC, MutableRefObject, memo, useEffect, useRef } from "react";
 import { Group, ShaderMaterial } from "three";
-import { letterWidth, numTunnelEdges } from "../modules/constants";
+import {
+  letterWidth,
+  numTunnelEdges,
+  tunnelSize,
+} from "../modules/constants";
 
 const TextRing: FC<{
   letter: string;
@@ -55,7 +59,7 @@ const Char3d: FC<{
   const textRef = useRef<any>(null);
   useEffect(() => {
     gsap.to(textRef.current.position, {
-      x: -0.7,
+      x: -tunnelSize,
       y: 0,
       duration: 0.5,
     });
@@ -85,7 +89,7 @@ const Char3d: FC<{
       ref={textRef}
       font={"fonts/Astronomic-Mono.ttf"}
       anchorX={"left"}
-      position={[-2.5, (Math.random() - 0.5) * 3, 0]}
+      position={[-1.8 - tunnelSize, (Math.random() - 0.5) * 3, 0]}
       rotation={[
         // (Math.random() - 0.5) * 3,
         0,
