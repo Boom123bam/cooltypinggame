@@ -2,6 +2,7 @@ import {
   Dispatch,
   MutableRefObject,
   SetStateAction,
+  memo,
   useEffect,
 } from "react";
 import { ShaderMaterial } from "three";
@@ -26,7 +27,7 @@ const TextTunnel: React.FC<{
         .map(
           (letter, index) =>
             index > typedString.length - maxCharsToShow - 1 && (
-              <TextRing
+              <MemoTextRing
                 key={index}
                 index={index}
                 letter={letter}
@@ -38,4 +39,5 @@ const TextTunnel: React.FC<{
   );
 };
 
+const MemoTextRing = memo(TextRing);
 export default TextTunnel;
