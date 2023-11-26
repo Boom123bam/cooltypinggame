@@ -1,10 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import MovingText from "./MovingText";
+import { ShaderMaterial } from "three";
 
 const TextTunnel: React.FC<{
   typedString: string;
   setTunnelLength: Dispatch<SetStateAction<number>>;
-}> = ({ typedString, setTunnelLength }) => {
+  textMaterialRef: MutableRefObject<ShaderMaterial>;
+}> = ({ typedString, setTunnelLength, textMaterialRef }) => {
   const edges = 8; // Adjust the number of instances as needed
 
   return (
@@ -14,6 +16,7 @@ const TextTunnel: React.FC<{
         <MovingText
           typedString={typedString}
           setTunnelLength={setTunnelLength}
+          textMaterialRef={textMaterialRef}
         />
       </group>
 
@@ -25,6 +28,7 @@ const TextTunnel: React.FC<{
           <MovingText
             typedString={typedString}
             setTunnelLength={null}
+            textMaterialRef={textMaterialRef}
           />
         </group>
       ))}

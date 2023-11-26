@@ -3,19 +3,22 @@ import gsap from "gsap";
 import {
   Dispatch,
   FC,
+  MutableRefObject,
   SetStateAction,
   memo,
   useEffect,
   useRef,
 } from "react";
+import { ShaderMaterial } from "three";
 
-const letterWidth = 0.75;
+const letterWidth = 0.7;
 const maxCharsToShow = 25;
 
 const MovingText: FC<{
   typedString: string;
   setTunnelLength: Dispatch<SetStateAction<number>> | null;
-}> = ({ typedString, setTunnelLength }) => {
+  textMaterialRef: MutableRefObject<ShaderMaterial>;
+}> = ({ typedString, setTunnelLength, textMaterialRef }) => {
   useEffect(() => {
     if (setTunnelLength) {
       setTunnelLength(letterWidth * typedString.length);
@@ -27,7 +30,12 @@ const MovingText: FC<{
       {typedString.split("").map((letter, index) => {
         if (index > typedString.length - maxCharsToShow - 1)
           return (
-            <Char3dMemo key={index} letter={letter} index={index} />
+            <Char3dMemo
+              key={index}
+              letter={letter}
+              index={index}
+              textMaterialRef={textMaterialRef}
+            />
           );
       })}
     </group>
@@ -37,16 +45,34 @@ const MovingText: FC<{
 const Char3d: FC<{
   letter: string;
   index: number;
-}> = ({ letter, index }) => {
+  textMaterialRef: MutableRefObject<ShaderMaterial>;
+}> = ({ letter, index, textMaterialRef }) => {
   const textRef = useRef<any>(null);
   useEffect(() => {
     gsap.to(textRef.current.position, {
-      x: -1.2,
-      duration: 0.2,
+      x: -0.7,
+      y: 0,
+      duration: 0.5,
     });
+
     gsap.to(textRef.current, {
-      fillOpacity: 0.1,
-      duration: 1,
+      fillOpacity: 1,
+      duration: 0.5,
+      onComplete: function () {
+        gsap.to(textRef.current, {
+          fillOpacity: 0.1,
+          duration: 1,
+        });
+      },
+    });
+
+    gsap.to(textRef.current.rotation, {
+      y: Math.PI / 2,
+      duration: 0.5,
+    });
+    gsap.to(textRef.current.rotation, {
+      x: (Math.random() - 0.5) * 5,
+      duration: 5.5,
     });
   });
   return (
@@ -54,8 +80,19 @@ const Char3d: FC<{
       ref={textRef}
       font={"fonts/Astronomic-Mono.ttf"}
       anchorX={"left"}
-      position={[-1, 0, -index * letterWidth]}
-      rotation={[0, Math.PI / 2, 0]}
+      position={[
+        -2.5,
+        (Math.random() - 0.5) * 3,
+        -index * letterWidth,
+      ]}
+      rotation={[
+        // (Math.random() - 0.5) * 3,
+        0,
+        Math.PI / 2 - 0.5,
+        0,
+      ]}
+      material={textMaterialRef.current ?? undefined}
+      fillOpacity={0}
     >
       {letter}
     </Text>
