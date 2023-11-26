@@ -9,6 +9,7 @@ function TypingGame() {
     totalTypingCharIndex: 0,
     typingWordIndex: 0,
     typingCharIndex: 0,
+    typoFlag: false,
   });
 
   const [updateKey, setUpdateKey] = useState(false);
@@ -51,6 +52,7 @@ function TypingGame() {
 
       if (goNextWord) {
         setTypingState((currentTypingState) => ({
+          ...currentTypingState,
           typingWordIndex: currentTypingState.typingWordIndex + 1,
           totalTypingCharIndex:
             currentTypingState.totalTypingCharIndex + 1,
@@ -64,6 +66,11 @@ function TypingGame() {
           typingCharIndex: currentTypingState.typingCharIndex + 1,
         }));
       }
+    } else {
+      setTypingState((currentTypingState) => ({
+        ...currentTypingState,
+        typoFlag: !currentTypingState.typoFlag,
+      }));
     }
 
     document.addEventListener("keypress", handleKeyDown, {
@@ -85,6 +92,7 @@ function TypingGame() {
         allWords={allWords}
         typingWordIndex={typingState.typingWordIndex}
         typingCharIndex={typingState.typingCharIndex}
+        typoFlag={typingState.typoFlag}
       />
       <GameCanvasMemo
         stringToType={stringToType}

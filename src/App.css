@@ -64,4 +64,7 @@ body {
       z-index: -1;
     }
   }
+  .typo .char.typing:before {
+    background-color: #f88;
+  }
 }

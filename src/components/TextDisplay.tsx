@@ -5,7 +5,8 @@ const TextDisplay: React.FC<{
   allWords: string[];
   typingWordIndex: number;
   typingCharIndex: number;
-}> = ({ allWords, typingWordIndex, typingCharIndex }) => {
+  typoFlag: boolean;
+}> = ({ allWords, typingWordIndex, typingCharIndex, typoFlag }) => {
   const currentWordRef = useRef<HTMLElement | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [showCursor, setShowCursor] = useState(true);
@@ -22,6 +23,8 @@ const TextDisplay: React.FC<{
 
   // set cursor to show on letter type
   useEffect(() => {
+    if (!scrollerRef.current) return;
+    scrollerRef.current.classList.remove("typo");
     if (cursorTimeoutRef.current)
       clearTimeout(cursorTimeoutRef.current);
     setShowCursor(true);
@@ -30,7 +33,14 @@ const TextDisplay: React.FC<{
       setShowCursor((current) => !current);
       cursorTimeoutRef.current = null;
     }, 500);
-  }, [typingCharIndex]);
+  }, [typingCharIndex, typoFlag]);
+
+  // set cursor to red on typo
+  useEffect(() => {
+    console.log("first");
+    if (!scrollerRef.current) return;
+    scrollerRef.current.classList.add("typo");
+  }, [typoFlag]);
 
   useEffect(() => {
     // update scroll
@@ -53,7 +63,7 @@ const TextDisplay: React.FC<{
       <div
         className={`text-display${showCursor ? " show-cursor" : ""}`}
       >
-        <div className="scroller" ref={scrollerRef}>
+        <div className={`scroller`} ref={scrollerRef}>
           {allWords.map((word, i) => (
             <WordMemo
               key={i}
