@@ -11,7 +11,19 @@ const TextRing: FC<{
 }> = ({ letter, textMaterialRef, index }) => {
   const groupRef = useRef<Group>(null);
   useEffect(() => {
-    if (groupRef.current) groupRef.current.rotation.z = index * 0.15;
+    if (groupRef.current) {
+      groupRef.current.rotation.z = index * 0.15;
+      gsap.fromTo(
+        groupRef.current.rotation,
+        {
+          z: index * 0.15,
+        },
+        {
+          z: index * 0.15 + 1.5,
+          duration: 5,
+        }
+      );
+    }
   });
   return (
     <>
