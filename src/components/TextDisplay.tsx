@@ -11,6 +11,7 @@ const TextDisplay: React.FC<{
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [showCursor, setShowCursor] = useState(true);
   const cursorTimeoutRef = useRef<number | null>(null);
+  const lastTypoFlagRef = useRef(false); // prevent typo on inintal render
 
   // make cursor flash
   useEffect(() => {
@@ -37,7 +38,8 @@ const TextDisplay: React.FC<{
 
   // set cursor to red on typo
   useEffect(() => {
-    console.log("first");
+    if (typoFlag == lastTypoFlagRef.current) return;
+    lastTypoFlagRef.current = typoFlag;
     if (!scrollerRef.current) return;
     scrollerRef.current.classList.add("typo");
   }, [typoFlag]);
