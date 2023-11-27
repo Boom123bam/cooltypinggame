@@ -1,11 +1,9 @@
-export function getRandomWord() {
-  const words = ["apple", "banana", "orange", "grape", "kiwi"];
-  const randomIndex = Math.floor(Math.random() * words.length);
-  return words[randomIndex];
-}
-
-export async function getRandomWordList(wordCount: number) {
-  const words = ["apple", "banana", "orange", "grape", "kiwi"];
+export async function getRandomWordList(
+  wordCount: number,
+  fileName: string
+) {
+  const data = await getWordsData(fileName);
+  const words = data.words;
   const result: string[] = [];
   for (let i = 0; i < wordCount; i++) {
     const randomIndex = Math.floor(Math.random() * words.length);
@@ -15,4 +13,17 @@ export async function getRandomWordList(wordCount: number) {
     new Promise((resolve) => setTimeout(resolve, ms));
   await delay(1000);
   return result;
+}
+
+async function getWordsData(fileName: string) {
+  let data = localStorage.getItem(fileName);
+  if (data) return JSON.parse(data);
+
+  const res = await fetch(`/json/${fileName}.json`);
+  data = await res.json();
+  if (data) {
+    localStorage.setItem(fileName, JSON.stringify(data));
+    return data;
+  }
+  throw Error("no file: " + fileName);
 }

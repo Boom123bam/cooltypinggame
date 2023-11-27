@@ -23,7 +23,7 @@ function TypingGame() {
 
   const updateWords = async () => {
     updatingWordsRef.current = true;
-    const wordList = await getRandomWordList(50);
+    const wordList = await getRandomWordList(50, "English_1k");
     setallWords(allWords.concat(wordList));
     updatingWordsRef.current = false;
   };
