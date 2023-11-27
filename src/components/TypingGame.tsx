@@ -40,6 +40,7 @@ function TypingGame() {
 
   // key press listener
   useEffect(() => {
+    if (!lastKeyRef.current) return;
     // update state according to char typed
     if (
       stringToType[typingState.totalTypingCharIndex] ==
@@ -67,6 +68,7 @@ function TypingGame() {
         }));
       }
     } else {
+      // handle typo
       setTypingState((currentTypingState) => ({
         ...currentTypingState,
         typoFlag: !currentTypingState.typoFlag,
