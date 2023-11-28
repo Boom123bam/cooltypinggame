@@ -56,7 +56,7 @@ function ModeSelector() {
             {option}
           </button>
         ))}
-        <span className="selection-indicator"></span>
+        <span className="selection-indicator gradient glow-shadow"></span>
       </div>
       <div className="minor-options">
         {options[selected.mode]?.map((option) => (
