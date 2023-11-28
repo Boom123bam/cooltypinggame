@@ -6,14 +6,18 @@ body {
 
 #root {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .text-display {
   --rows: 3;
   --height: 4rem;
   --line-height: calc(var(--height) / var(--rows));
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
   mix-blend-mode: difference;
   width: 15rem;
   height: var(--height);
@@ -66,5 +70,77 @@ body {
   }
   .typo .char.typing:before {
     background-color: #f88;
+  }
+}
+
+.mode-selector {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  .major-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    position: relative;
+  }
+
+  .major-options .option {
+    padding: 0.5rem 1.5rem;
+    transition: color 0.2s;
+  }
+  .major-options .option[aria-selected="true"] {
+    color: black;
+  }
+  .major-options
+    :nth-child(2).option[aria-selected="true"]
+    ~ .selection-indicator {
+    translate: 100%;
+  }
+
+  .major-options
+    :nth-child(3).option[aria-selected="true"]
+    ~ .selection-indicator {
+    translate: 200%;
+  }
+
+  .major-options .selection-indicator {
+    background: var(
+      --gradient,
+      linear-gradient(
+        106deg,
+        rgba(226, 255, 207, 0.75) 22.12%,
+        rgba(243, 222, 255, 0.75) 77.27%
+      )
+    );
+
+    width: 33.33%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    border-radius: 100px;
+    transition: translate 0.2s;
+  }
+
+  .minor-options {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .minor-options .option {
+    width: 1.5rem;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+  }
+
+  .minor-options .option[aria-selected="true"] {
+    background-color: #ffffff40;
   }
 }
