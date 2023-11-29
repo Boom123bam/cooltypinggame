@@ -34,8 +34,9 @@ function ModeSelector() {
   return (
     <div className={`mode-selector${isTyping ? " hide" : ""}`}>
       <div className="major-options">
-        {Object.keys(options).map((option) => (
+        {Object.keys(options).map((option, index) => (
           <button
+            key={index}
             className="option"
             aria-selected={
               selectedMode.mode === option ? "true" : "false"
@@ -50,8 +51,9 @@ function ModeSelector() {
         <span className="selection-indicator gradient glow-shadow"></span>
       </div>
       <div className="minor-options">
-        {options[selectedMode.mode]?.map((option) => (
+        {options[selectedMode.mode]?.map((option, index) => (
           <button
+            key={index}
             className="option"
             aria-selected={
               selectedMode.value === option ? "true" : "false"
