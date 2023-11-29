@@ -2,9 +2,11 @@ import { useState, useEffect, useRef, memo } from "react";
 import { getRandomWordList } from "../modules/database";
 import TextDisplay from "../components/TextDisplay";
 import GameCanvas from "../components/GameCanvas";
+import { useIsTypingStore } from "../stores/gameState";
 
 function TypingGame() {
   const [allWords, setallWords] = useState<string[]>([]);
+  const { setIsTyping, isTyping } = useIsTypingStore();
   const [typingState, setTypingState] = useState({
     totalTypingCharIndex: 0,
     typingWordIndex: 0,
@@ -41,6 +43,19 @@ function TypingGame() {
   // key press listener
   useEffect(() => {
     if (!lastKeyRef.current) return;
+
+    if (!isTyping) {
+      setIsTyping(true);
+      document.addEventListener(
+        "mousemove",
+        () => {
+          setIsTyping(false);
+        },
+        {
+          once: true,
+        }
+      );
+    }
     // update state according to char typed
     if (
       stringToType[typingState.totalTypingCharIndex] ==
