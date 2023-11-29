@@ -1,16 +1,8 @@
-import { useState } from "react";
-import { useIsTypingStore } from "../stores/gameState";
-
-interface ModeOptions {
-  time: number[];
-  words: number[];
-  infinite: null;
-}
-
-interface SelectedState {
-  mode: keyof ModeOptions;
-  value: number | null;
-}
+import {
+  ModeOptions,
+  useGameSettings,
+  useIsTypingStore,
+} from "../stores/gameState";
 
 const options: ModeOptions = {
   time: [15, 30, 60],
@@ -20,15 +12,12 @@ const options: ModeOptions = {
 
 function ModeSelector() {
   const { isTyping } = useIsTypingStore();
-  const [selected, setSelected] = useState<SelectedState>({
-    mode: "time",
-    value: 15,
-  });
+  const { selectedMode, setSelectedMode } = useGameSettings();
 
   function handleMajorOptionClick(option: keyof ModeOptions) {
-    if (selected.mode != option) {
+    if (selectedMode.mode != option) {
       const optionValues = options[option];
-      setSelected({
+      setSelectedMode({
         mode: option,
         value:
           optionValues && optionValues.length > 0
@@ -39,7 +28,7 @@ function ModeSelector() {
   }
 
   function handleMinorOptionClick(option: number) {
-    setSelected({ ...selected, value: option });
+    setSelectedMode({ ...selectedMode, value: option });
   }
 
   return (
@@ -49,7 +38,7 @@ function ModeSelector() {
           <button
             className="option"
             aria-selected={
-              selected.mode === option ? "true" : "false"
+              selectedMode.mode === option ? "true" : "false"
             }
             onClick={() =>
               handleMajorOptionClick(option as keyof ModeOptions)
@@ -61,11 +50,11 @@ function ModeSelector() {
         <span className="selection-indicator gradient glow-shadow"></span>
       </div>
       <div className="minor-options">
-        {options[selected.mode]?.map((option) => (
+        {options[selectedMode.mode]?.map((option) => (
           <button
             className="option"
             aria-selected={
-              selected.value === option ? "true" : "false"
+              selectedMode.value === option ? "true" : "false"
             }
             onClick={() => handleMinorOptionClick(option)}
           >
