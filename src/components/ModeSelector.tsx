@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useIsTypingStore } from "../stores/gameState";
 
 interface ModeOptions {
   time: number[];
@@ -18,6 +19,7 @@ const options: ModeOptions = {
 };
 
 function ModeSelector() {
+  const { isTyping } = useIsTypingStore();
   const [selected, setSelected] = useState<SelectedState>({
     mode: "time",
     value: 15,
@@ -41,7 +43,7 @@ function ModeSelector() {
   }
 
   return (
-    <div className="mode-selector">
+    <div className={`mode-selector${isTyping ? " hide" : ""}`}>
       <div className="major-options">
         {Object.keys(options).map((option) => (
           <button
