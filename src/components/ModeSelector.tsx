@@ -1,7 +1,7 @@
 import {
   ModeOptions,
   useGameSettings,
-  useIsTypingStore,
+  useGameState,
 } from "../stores/gameState";
 
 const options: ModeOptions = {
@@ -11,7 +11,7 @@ const options: ModeOptions = {
 };
 
 function ModeSelector() {
-  const { isTyping } = useIsTypingStore();
+  const { isTyping } = useGameState();
   const { selectedMode, setSelectedMode } = useGameSettings();
 
   function handleMajorOptionClick(option: keyof ModeOptions) {

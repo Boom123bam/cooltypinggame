@@ -2,11 +2,11 @@ import { useState, useEffect, useRef, memo } from "react";
 import { getRandomWordList } from "../modules/database";
 import TextDisplay from "../components/TextDisplay";
 import GameCanvas from "../components/GameCanvas";
-import { useIsTypingStore } from "../stores/gameState";
+import { useGameState } from "../stores/gameState";
 
 function TypingGame() {
   const [allWords, setallWords] = useState<string[]>([]);
-  const { setIsTyping, isTyping } = useIsTypingStore();
+  const { setIsTyping, isTyping } = useGameState();
   const [typingState, setTypingState] = useState({
     totalTypingCharIndex: 0,
     typingWordIndex: 0,

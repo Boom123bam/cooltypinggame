@@ -1,11 +1,18 @@
 import { create } from "zustand";
 
-interface IsTypingState {
+type PageState = "game" | "results";
+
+interface GameState {
+  page: PageState;
+  setPage: (page: PageState) => void;
+
   isTyping: boolean;
   setIsTyping: (isTyping: boolean) => void;
 }
 
-const useIsTypingStore = create<IsTypingState>()((set) => ({
+const useGameState = create<GameState>()((set) => ({
+  page: "game",
+  setPage: (page: PageState) => set({ page }),
   isTyping: false,
   setIsTyping: (isTyping: boolean) => set({ isTyping }),
 }));
@@ -39,4 +46,4 @@ const useGameSettings = create<GameSettings>()((set) => ({
   language: "English_1k",
 }));
 
-export { useIsTypingStore, useGameSettings };
+export { useGameState, useGameSettings };
