@@ -19,6 +19,7 @@ function TypingGame() {
   const lastKeyRef = useRef("");
   const updatingWordsRef = useRef(false);
   const didMount = useRef(false);
+  const stringToType = allWords.join(" ");
 
   const handleKeyDown = (e: KeyboardEvent) => {
     lastKeyRef.current = e.key;
@@ -48,7 +49,14 @@ function TypingGame() {
     else updateWords();
   }, [selectedMode]);
 
-  const stringToType = allWords.join(" ");
+  // infinite and time mode: fetch words when almost all words typed
+  useEffect(() => {
+    if (selectedMode.mode == "time") return;
+    if (updatingWordsRef.current) return;
+    if (typingState.typingWordIndex > allWords.length - 15) {
+      updateWords();
+    }
+  }, [typingState.typingWordIndex]);
 
   // key press listener
   useEffect(() => {
@@ -104,15 +112,6 @@ function TypingGame() {
       once: true,
     });
   }, [updateKey]);
-
-  // infinite and time mode: fetch words when almost all words typed
-  useEffect(() => {
-    if (selectedMode.mode == "time") return;
-    if (updatingWordsRef.current) return;
-    if (typingState.typingWordIndex > allWords.length - 15) {
-      updateWords();
-    }
-  }, [typingState.typingWordIndex]);
 
   useEffect(() => {
     didMount.current = true;
