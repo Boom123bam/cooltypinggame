@@ -26,12 +26,23 @@ function TypingGame() {
     setUpdateKey(!updateKey);
   };
 
-  const updateWords = async (amount = 50) => {
+  const updateWords = async (amount: number, append = true) => {
     updatingWordsRef.current = true;
     const wordList = await getRandomWordList(amount, "English_1k");
-    setallWords(allWords.concat(wordList));
+    setallWords(append ? allWords.concat(wordList) : wordList);
     updatingWordsRef.current = false;
   };
+
+  function resetGame() {
+    setallWords([]);
+    setIsTyping(false);
+    setTypingState({
+      totalTypingCharIndex: 0,
+      typingWordIndex: 0,
+      typingCharIndex: 0,
+      typoFlag: false,
+    });
+  }
 
   useEffect(() => {
     // Add event listener when the component mounts
@@ -43,18 +54,20 @@ function TypingGame() {
   useEffect(() => {
     if (!didMount.current) return;
 
+    resetGame();
+
     if (selectedMode.mode == "words" && selectedMode.value)
-      updateWords(selectedMode.value);
+      updateWords(selectedMode.value, false);
     // infinite and time mode, use continuous fetch
-    else updateWords();
+    else updateWords(50, false);
   }, [selectedMode]);
 
   // infinite and time mode: fetch words when almost all words typed
   useEffect(() => {
-    if (selectedMode.mode == "time") return;
+    if (selectedMode.mode == "words") return;
     if (updatingWordsRef.current) return;
     if (typingState.typingWordIndex > allWords.length - 15) {
-      updateWords();
+      updateWords(50);
     }
   }, [typingState.typingWordIndex]);
 

@@ -1,5 +1,6 @@
 import { memo, useEffect, useRef, useState } from "react";
 import Word from "./Word";
+import { useGameSettings } from "../stores/gameState";
 
 const TextDisplay: React.FC<{
   allWords: string[];
@@ -12,6 +13,17 @@ const TextDisplay: React.FC<{
   const [showCursor, setShowCursor] = useState(true);
   const cursorTimeoutRef = useRef<number | null>(null);
   const lastTypoFlagRef = useRef(false); // prevent typo on inintal render
+  const { selectedMode } = useGameSettings();
+
+  function resetGame() {
+    if (!scrollerRef.current) return;
+    scrollerRef.current.classList.remove("typo");
+    scrollerRef.current.style.setProperty("--depth", "0px");
+  }
+
+  useEffect(() => {
+    resetGame();
+  }, [selectedMode]);
 
   // make cursor flash
   useEffect(() => {
