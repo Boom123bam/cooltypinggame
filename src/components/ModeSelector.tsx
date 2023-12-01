@@ -23,7 +23,6 @@ function ModeSelector() {
             : null,
       };
       setModeSettings(newSettings);
-      console.log("first");
       setLocalModeSettings(newSettings);
     }
   }
