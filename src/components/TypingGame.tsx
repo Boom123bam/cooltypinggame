@@ -7,7 +7,7 @@ import { getLocalModeSettings } from "../modules/localStorage";
 
 function TypingGame() {
   const [allWords, setallWords] = useState<string[]>([]);
-  const { setIsTyping, isTyping } = useGameState();
+  const { setIsTyping, isTyping, setPage } = useGameState();
   const { modeSettings, setModeSettings } = useGameSettings();
   const [typingState, setTypingState] = useState({
     totalTypingCharIndex: 0,
@@ -54,6 +54,7 @@ function TypingGame() {
     if (settings) setModeSettings(settings);
   }, []);
 
+  // On settings change
   useEffect(() => {
     if (!didMount.current) return;
 
@@ -65,16 +66,18 @@ function TypingGame() {
     else updateWords(50, false);
   }, [modeSettings]);
 
-  // infinite and time mode: fetch words when almost all words typed
+  // On each new word
   useEffect(() => {
     if (modeSettings.mode == "words") return;
+
+    // infinite and time mode: fetch words when almost all words typed
     if (updatingWordsRef.current) return;
     if (typingState.typingWordIndex > allWords.length - 15) {
       updateWords(50);
     }
   }, [typingState.typingWordIndex]);
 
-  // key press listener
+  // On key press
   useEffect(() => {
     if (!lastKeyRef.current) return;
 
@@ -96,6 +99,17 @@ function TypingGame() {
         lastKeyRef.current ||
       lastKeyRef.current == "Enter"
     ) {
+      // correct key
+
+      if (
+        modeSettings.mode == "words" &&
+        stringToType.length - 1 == typingState.totalTypingCharIndex
+      ) {
+        // finish
+        setPage("results");
+        return;
+      }
+
       const goNextWord =
         typingState.typingCharIndex ==
         allWords[typingState.typingWordIndex].length;
