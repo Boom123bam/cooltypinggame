@@ -14,13 +14,13 @@ export interface ModeOptions {
   infinite: null;
 }
 
-export interface SelectedModeState {
+export interface modeSettingsState {
   mode: keyof ModeOptions;
   value: number | null;
 }
 
 export interface GameSettings {
-  selectedMode: SelectedModeState;
+  modeSettings: modeSettingsState;
   language: string;
-  setSelectedMode: (selectedMode: SelectedModeState) => void;
+  setModeSettings: (modeSettings: modeSettingsState) => void;
 }

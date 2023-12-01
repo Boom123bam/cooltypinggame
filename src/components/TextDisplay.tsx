@@ -13,7 +13,7 @@ const TextDisplay: React.FC<{
   const [showCursor, setShowCursor] = useState(true);
   const cursorTimeoutRef = useRef<number | null>(null);
   const lastTypoFlagRef = useRef(false); // prevent typo on inintal render
-  const { selectedMode } = useGameSettings();
+  const { modeSettings } = useGameSettings();
 
   function resetGame() {
     if (!scrollerRef.current) return;
@@ -23,7 +23,7 @@ const TextDisplay: React.FC<{
 
   useEffect(() => {
     resetGame();
-  }, [selectedMode]);
+  }, [modeSettings]);
 
   // make cursor flash
   useEffect(() => {

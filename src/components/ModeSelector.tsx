@@ -9,12 +9,12 @@ const options: ModeOptions = {
 
 function ModeSelector() {
   const { isTyping } = useGameState();
-  const { selectedMode, setSelectedMode } = useGameSettings();
+  const { modeSettings, setModeSettings } = useGameSettings();
 
   function handleMajorOptionClick(option: keyof ModeOptions) {
-    if (selectedMode.mode != option) {
+    if (modeSettings.mode != option) {
       const optionValues = options[option];
-      setSelectedMode({
+      setModeSettings({
         mode: option,
         value:
           optionValues && optionValues.length > 0
@@ -25,7 +25,7 @@ function ModeSelector() {
   }
 
   function handleMinorOptionClick(option: number) {
-    setSelectedMode({ ...selectedMode, value: option });
+    setModeSettings({ ...modeSettings, value: option });
   }
 
   return (
@@ -36,7 +36,7 @@ function ModeSelector() {
             key={index}
             className="option"
             aria-selected={
-              selectedMode.mode === option ? "true" : "false"
+              modeSettings.mode === option ? "true" : "false"
             }
             onClick={() =>
               handleMajorOptionClick(option as keyof ModeOptions)
@@ -48,12 +48,12 @@ function ModeSelector() {
         <span className="selection-indicator gradient glow-shadow"></span>
       </div>
       <div className="minor-options">
-        {options[selectedMode.mode]?.map((option, index) => (
+        {options[modeSettings.mode]?.map((option, index) => (
           <button
             key={index}
             className="option"
             aria-selected={
-              selectedMode.value === option ? "true" : "false"
+              modeSettings.value === option ? "true" : "false"
             }
             onClick={() => handleMinorOptionClick(option)}
           >

@@ -3,7 +3,7 @@ import {
   GameState,
   PageState,
   GameSettings,
-  SelectedModeState,
+  modeSettingsState,
 } from "../types/types";
 
 const useGameState = create<GameState>()((set) => ({
@@ -14,12 +14,12 @@ const useGameState = create<GameState>()((set) => ({
 }));
 
 const useGameSettings = create<GameSettings>()((set) => ({
-  setSelectedMode: (selectedMode: SelectedModeState) => {
+  setModeSettings: (modeSettings: modeSettingsState) => {
     set({
-      selectedMode,
+      modeSettings: modeSettings,
     });
   },
-  selectedMode: {
+  modeSettings: {
     mode: "time",
     value: 30,
   },

@@ -7,7 +7,7 @@ import { useGameSettings, useGameState } from "../stores/gameState";
 function TypingGame() {
   const [allWords, setallWords] = useState<string[]>([]);
   const { setIsTyping, isTyping } = useGameState();
-  const { selectedMode } = useGameSettings();
+  const { modeSettings } = useGameSettings();
   const [typingState, setTypingState] = useState({
     totalTypingCharIndex: 0,
     typingWordIndex: 0,
@@ -56,15 +56,15 @@ function TypingGame() {
 
     resetGame();
 
-    if (selectedMode.mode == "words" && selectedMode.value)
-      updateWords(selectedMode.value, false);
+    if (modeSettings.mode == "words" && modeSettings.value)
+      updateWords(modeSettings.value, false);
     // infinite and time mode, use continuous fetch
     else updateWords(50, false);
-  }, [selectedMode]);
+  }, [modeSettings]);
 
   // infinite and time mode: fetch words when almost all words typed
   useEffect(() => {
-    if (selectedMode.mode == "words") return;
+    if (modeSettings.mode == "words") return;
     if (updatingWordsRef.current) return;
     if (typingState.typingWordIndex > allWords.length - 15) {
       updateWords(50);
