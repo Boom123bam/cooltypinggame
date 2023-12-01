@@ -3,11 +3,12 @@ import { getRandomWordList } from "../modules/database";
 import TextDisplay from "../components/TextDisplay";
 import GameCanvas from "../components/GameCanvas";
 import { useGameSettings, useGameState } from "../stores/gameState";
+import { getLocalModeSettings } from "../modules/localStorage";
 
 function TypingGame() {
   const [allWords, setallWords] = useState<string[]>([]);
   const { setIsTyping, isTyping } = useGameState();
-  const { modeSettings } = useGameSettings();
+  const { modeSettings, setModeSettings } = useGameSettings();
   const [typingState, setTypingState] = useState({
     totalTypingCharIndex: 0,
     typingWordIndex: 0,
@@ -49,6 +50,8 @@ function TypingGame() {
     document.addEventListener("keypress", handleKeyDown, {
       once: true,
     });
+    const settings = getLocalModeSettings();
+    if (settings) setModeSettings(settings);
   }, []);
 
   useEffect(() => {
