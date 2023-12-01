@@ -1,8 +1,5 @@
-import {
-  ModeOptions,
-  useGameSettings,
-  useGameState,
-} from "../stores/gameState";
+import { useGameSettings, useGameState } from "../stores/gameState";
+import { ModeOptions } from "../types/types";
 
 const options: ModeOptions = {
   time: [15, 30, 60],
