@@ -1,3 +1,4 @@
+import { setLocalModeSettings } from "../modules/localStorage";
 import { useGameSettings, useGameState } from "../stores/gameState";
 import { ModeOptions } from "../types/types";
 
@@ -14,18 +15,23 @@ function ModeSelector() {
   function handleMajorOptionClick(option: keyof ModeOptions) {
     if (modeSettings.mode != option) {
       const optionValues = options[option];
-      setModeSettings({
+      const newSettings = {
         mode: option,
         value:
           optionValues && optionValues.length > 0
             ? optionValues[0]
             : null,
-      });
+      };
+      setModeSettings(newSettings);
+      console.log("first");
+      setLocalModeSettings(newSettings);
     }
   }
 
   function handleMinorOptionClick(option: number) {
-    setModeSettings({ ...modeSettings, value: option });
+    const newSettings = { ...modeSettings, value: option };
+    setModeSettings(newSettings);
+    setLocalModeSettings(newSettings);
   }
 
   return (
