@@ -14,11 +14,10 @@ const useGameState = create<GameState>()((set) => ({
 }));
 
 const useGameSettings = create<GameSettings>()((set) => ({
-  setModeSettings: (modeSettings: modeSettingsState) => {
+  setModeSettings: (modeSettings: modeSettingsState) =>
     set({
       modeSettings: modeSettings,
-    });
-  },
+    }),
   modeSettings: {
     mode: "time",
     value: 30,
