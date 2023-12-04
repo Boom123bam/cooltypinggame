@@ -3,6 +3,8 @@ import { getRandomWordList } from "../modules/database";
 import TextDisplay from "../components/TextDisplay";
 import GameCanvas from "../components/GameCanvas";
 import { useGameSettings, useGameState } from "../stores/gameState";
+import timer from "../modules/timer";
+import { Timer } from "../types/types";
 
 function TypingGame() {
   const [allWords, setallWords] = useState<string[]>([]);
@@ -14,6 +16,14 @@ function TypingGame() {
     typingCharIndex: 0,
     typoFlag: false,
   });
+
+  const countDownRef = useRef<Timer>(
+    timer(
+      () => setTimeLeft((currentTime) => currentTime - 1),
+      () => {}
+    )
+  );
+  const [timeLeft, setTimeLeft] = useState<number>(10);
 
   const [updateKey, setUpdateKey] = useState(false);
   const lastKeyRef = useRef("");
@@ -44,8 +54,11 @@ function TypingGame() {
     });
   }
 
+  // On mount
   useEffect(() => {
-    // Add event listener when the component mounts
+    if (!didMount.current) return;
+
+    // Add event listener
     document.addEventListener("keypress", handleKeyDown, {
       once: true,
     });
@@ -61,6 +74,10 @@ function TypingGame() {
       updateWords(modeSettings.value, false);
     // infinite and time mode, use continuous fetch
     else updateWords(50, false);
+
+    if (modeSettings.mode == "time" && modeSettings.value) {
+      setTimeLeft(modeSettings.value);
+    }
   }, [modeSettings]);
 
   // On each new word
@@ -77,6 +94,13 @@ function TypingGame() {
   // On key press
   useEffect(() => {
     if (!lastKeyRef.current) return;
+
+    if (
+      typingState.totalTypingCharIndex == 0 &&
+      modeSettings.mode == "time"
+    ) {
+      countDownRef.current.start();
+    }
 
     if (!isTyping) {
       setIsTyping(true);
@@ -156,6 +180,7 @@ function TypingGame() {
         stringToType={stringToType}
         currentIndex={typingState.totalTypingCharIndex}
       />
+      {timeLeft}
     </>
   );
 }
