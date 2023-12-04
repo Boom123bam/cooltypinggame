@@ -1,29 +1,48 @@
-import { Timer } from "../types/types";
+class timer {
+  timeLeft: number = 0;
+  private nextSec: number = 0;
+  private timeout?: ReturnType<typeof setTimeout>;
+  private onChange: (timeLeft: number) => void;
+  private onEnd: () => void;
 
-function timer(workFunc: () => void, errorFunc: () => void): Timer {
-  let nextSec: number, timeout: ReturnType<typeof setTimeout>;
-
-  function start() {
-    nextSec = Date.now() + 1000;
-    timeout = setTimeout(step, 1000);
+  constructor(
+    onChange: (timeLeft: number) => void,
+    onEnd: () => void
+  ) {
+    this.onChange = onChange;
+    this.onEnd = onEnd;
   }
 
-  function stop() {
-    clearTimeout(timeout);
+  start(timeLeft: number) {
+    this.timeLeft = timeLeft;
+    this.nextSec = Date.now() + 1000;
+    this.timeout = setTimeout(this.step.bind(this), 1000);
   }
 
-  function step() {
-    const drift = Date.now() - nextSec;
+  stop() {
+    clearTimeout(this.timeout);
+  }
+
+  step() {
+    const drift = Date.now() - this.nextSec;
     if (drift > 1000) {
-      // You could have some default stuff here too...
-      if (errorFunc) errorFunc();
+      console.log("error");
     }
-    workFunc();
-    nextSec += 1000;
-    timeout = setTimeout(step, Math.max(0, 1000 - drift));
-  }
 
-  return { start, stop };
+    this.timeLeft--;
+
+    if (this.timeLeft <= 0) {
+      this.onEnd();
+      return;
+    }
+    this.onChange(this.timeLeft);
+
+    this.nextSec += 1000;
+    this.timeout = setTimeout(
+      this.step.bind(this),
+      Math.max(0, 1000 - drift)
+    );
+  }
 }
 
 export default timer;

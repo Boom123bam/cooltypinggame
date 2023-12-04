@@ -4,7 +4,6 @@ import TextDisplay from "../components/TextDisplay";
 import GameCanvas from "../components/GameCanvas";
 import { useGameSettings, useGameState } from "../stores/gameState";
 import timer from "../modules/timer";
-import { Timer } from "../types/types";
 
 function TypingGame() {
   const [allWords, setallWords] = useState<string[]>([]);
@@ -17,12 +16,7 @@ function TypingGame() {
     typoFlag: false,
   });
 
-  const countDownRef = useRef<Timer>(
-    timer(
-      () => setTimeLeft((currentTime) => currentTime - 1),
-      () => {}
-    )
-  );
+  const countDownRef = useRef<timer>();
   const [timeLeft, setTimeLeft] = useState<number>(10);
 
   const [updateKey, setUpdateKey] = useState(false);
@@ -57,6 +51,12 @@ function TypingGame() {
   // On mount
   useEffect(() => {
     if (!didMount.current) return;
+
+    // instantiate timer
+    countDownRef.current = new timer(
+      (timeLeft) => setTimeLeft(timeLeft),
+      () => setPage("results")
+    );
 
     // Add event listener
     document.addEventListener("keypress", handleKeyDown, {
@@ -97,9 +97,11 @@ function TypingGame() {
 
     if (
       typingState.totalTypingCharIndex == 0 &&
-      modeSettings.mode == "time"
+      modeSettings.mode == "time" &&
+      modeSettings.value &&
+      countDownRef.current
     ) {
-      countDownRef.current.start();
+      countDownRef.current.start(modeSettings.value);
     }
 
     if (!isTyping) {
