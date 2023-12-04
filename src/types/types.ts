@@ -24,3 +24,8 @@ export interface GameSettings {
   language: string;
   setModeSettings: (modeSettings: modeSettingsState) => void;
 }
+
+export interface Timer {
+  start: () => void;
+  stop: () => void;
+}
