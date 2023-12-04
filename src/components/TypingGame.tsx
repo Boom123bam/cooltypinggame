@@ -93,10 +93,13 @@ function TypingGame() {
 
   // On key press
   useEffect(() => {
-    if (!lastKeyRef.current) return;
+    const key = lastKeyRef.current;
+    if (!key) return;
+    const { totalTypingCharIndex, typingCharIndex, typingWordIndex } =
+      typingState;
 
     if (
-      typingState.totalTypingCharIndex == 0 &&
+      totalTypingCharIndex == 0 &&
       modeSettings.mode == "time" &&
       modeSettings.value &&
       countDownRef.current
@@ -116,17 +119,14 @@ function TypingGame() {
         }
       );
     }
+
     // update state according to char typed
-    if (
-      stringToType[typingState.totalTypingCharIndex] ==
-        lastKeyRef.current ||
-      lastKeyRef.current == "Enter"
-    ) {
+    if (stringToType[totalTypingCharIndex] == key || key == "Enter") {
       // correct key
 
       if (
         modeSettings.mode == "words" &&
-        stringToType.length - 1 == typingState.totalTypingCharIndex
+        stringToType.length - 1 == totalTypingCharIndex
       ) {
         // finish
         setPage("results");
@@ -134,22 +134,19 @@ function TypingGame() {
       }
 
       const goNextWord =
-        typingState.typingCharIndex ==
-        allWords[typingState.typingWordIndex].length;
+        typingCharIndex == allWords[typingWordIndex].length;
 
       if (goNextWord) {
         setTypingState((currentTypingState) => ({
           ...currentTypingState,
           typingWordIndex: currentTypingState.typingWordIndex + 1,
-          totalTypingCharIndex:
-            currentTypingState.totalTypingCharIndex + 1,
+          totalTypingCharIndex: totalTypingCharIndex + 1,
           typingCharIndex: 0,
         }));
       } else {
         setTypingState((currentTypingState) => ({
           ...currentTypingState,
-          totalTypingCharIndex:
-            currentTypingState.totalTypingCharIndex + 1,
+          totalTypingCharIndex: totalTypingCharIndex + 1,
           typingCharIndex: currentTypingState.typingCharIndex + 1,
         }));
       }
