@@ -1,3 +1,8 @@
+import {
+  getLocalLanguageData,
+  setLocalLanguageData,
+} from "./localStorage";
+
 export async function getRandomWordList(
   wordCount: number,
   fileName: string
@@ -15,15 +20,15 @@ export async function getRandomWordList(
   return result;
 }
 
-async function getWordsData(fileName: string) {
-  let data = localStorage.getItem(fileName);
-  if (data) return JSON.parse(data);
+async function getWordsData(language: string) {
+  let data = getLocalLanguageData(language);
+  if (data) return data;
 
-  const res = await fetch(`/json/${fileName}.json`);
+  const res = await fetch(`/json/${language}.json`);
   data = await res.json();
   if (data) {
-    localStorage.setItem(fileName, JSON.stringify(data));
+    setLocalLanguageData(language, data);
     return data;
   }
-  throw Error("no file: " + fileName);
+  throw Error("no file: " + language);
 }

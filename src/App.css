@@ -96,6 +96,11 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  transition: 0.35s;
+
+  &.hide {
+    translate: 0 -150%;
+  }
 
   .major-options {
     display: grid;
