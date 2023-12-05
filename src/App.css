@@ -1,6 +1,7 @@
 :root {
   --saturation: 100%;
   --lightness: 90%;
+  --reveal-delay: 2s;
 }
 
 body {
@@ -70,7 +71,7 @@ small {
 
 .typing-game-wrapper {
   transition: opacity 1s;
-  transition-delay: 1s;
+  transition-delay: var(--reveal-delay);
   &.hide {
     opacity: 0;
   }
@@ -215,11 +216,39 @@ small {
 }
 
 .stats {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
   transition: opacity 1s;
-  transition-delay: 2s;
+  transition-delay: var(--reveal-delay);
+  perspective: 500px;
 
-  &.hide {
+  &.hide .card-wrapper {
+    display: none;
+  }
+  &.show .card-wrapper {
+    opacity: 1;
+    animation: reveal 1s;
+  }
+}
+
+.card-wrapper {
+  transition: 0.5s;
+  transform: rotateX(10deg) rotateY(3deg);
+
+  &:hover {
+    transform: none !important;
+  }
+}
+
+@keyframes reveal {
+  from {
+    transform: scale(0.5) rotateX(270deg);
     opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
