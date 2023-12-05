@@ -16,6 +16,10 @@ body {
   align-items: center;
 }
 
+small {
+  font-size: 0.75rem;
+}
+
 .animated-gradient::before,
 .animated-gradient {
   /* requires width & height(in rem) and bgsize properties */
@@ -47,9 +51,16 @@ body {
   position: absolute;
   inset: 0;
   filter: blur(1.5rem);
+  z-index: -1;
 }
 
 @keyframes gradient {
+  100% {
+    background-position: var(--bgsize) calc(-1 * var(--bgsize));
+  }
+}
+
+@keyframes border {
   100% {
     background-position: var(--bgsize) calc(-1 * var(--bgsize));
   }
@@ -223,13 +234,92 @@ body {
   &.hide {
     opacity: 0;
   }
+}
+.stats .glow-card {
+  /* properties for animated gradient */
+  --bgsize: 500%;
+  --width: 22;
+  --height: 25;
 
-  .glow-card {
-    /* properties for animated gradient */
-    --bgsize: 500%;
-    --width: 22;
-    --height: 25;
+  border-radius: 1.75rem;
+  padding: 1rem;
 
+  .inner,
+  .wpm,
+  .wpm > .number,
+  .restart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .inner {
+    height: 100%;
     border-radius: 1rem;
+
+    mix-blend-mode: difference;
+    background: #9b9b9b;
+    box-shadow: 0px 0px 12px 8px #00000075 inset;
+
+    justify-content: center;
+    gap: 1.25rem;
+    color: black;
+  }
+
+  .wpm {
+    .number {
+      font-size: 8rem;
+      line-height: 80%;
+      font-weight: 700;
+    }
+  }
+
+  .restart {
+    gap: 0.75rem;
+    > button {
+      width: 3.5rem;
+      aspect-ratio: 1;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+
+      > img {
+        transition: rotate 0.5s;
+      }
+
+      &:hover {
+        background-color: #00000050;
+      }
+      &:hover > img {
+        rotate: 0.5turn;
+      }
+    }
+  }
+
+  hr {
+    height: 3px;
+    width: 50%;
+    background: linear-gradient(90deg, black 50%, transparent 50%);
+    background-repeat: repeat-x;
+    background-size: 16px;
+    animation: dash 2s linear infinite;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 3rem,
+      rgba(255, 255, 255, 1) calc(100% - 3rem),
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  .enter {
+    border: 1px solid black;
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.5rem;
+  }
+}
+
+@keyframes dash {
+  to {
+    background-position: 16px;
   }
 }

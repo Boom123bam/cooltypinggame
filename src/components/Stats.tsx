@@ -4,16 +4,19 @@ function Stats({ show }: StatsProps) {
   return (
     <div className={`stats ${show ? "show" : "hide"}`}>
       <div className="glow-card animated-gradient">
-        <div className="wpm">
-          <div className="big">60</div>
-          <div className="small">wpm</div>
-        </div>
+        <div className="inner">
+          <div className="wpm">
+            <div className="number">60</div>
+            <small>wpm</small>
+          </div>
+          <hr />
 
-        <hr />
-
-        <div className="restart">
-          <button>restart</button>
-          <div className="enter">enter</div>
+          <div className="restart">
+            <button>
+              <img src="icons/restart.svg" alt="restart" />
+            </button>
+            <small className="enter">enter</small>
+          </div>
         </div>
       </div>
     </div>
