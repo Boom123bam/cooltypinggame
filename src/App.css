@@ -222,11 +222,11 @@ small {
   perspective: 500px;
 
   &.hide .card-wrapper {
-    display: none;
+    opacity: 0;
   }
   &.show .card-wrapper {
     opacity: 1;
-    animation: reveal 1s;
+    animation: reveal 3s;
   }
 }
 
@@ -241,10 +241,11 @@ small {
 
 @keyframes reveal {
   from {
-    transform: scale(0.5) rotateX(270deg);
+    transform: scale(0) rotateX(3turn);
     opacity: 0;
   }
   to {
+    transform: scale(1) rotateX(10deg) rotateZ(0) rotateY(3deg);
     opacity: 1;
   }
 }
