@@ -1,7 +1,6 @@
 :root {
   --saturation: 100%;
   --lightness: 90%;
-  --reveal-delay: 2s;
 }
 
 body {
@@ -71,7 +70,6 @@ small {
 
 .typing-game-wrapper {
   transition: opacity 1s;
-  transition-delay: var(--reveal-delay);
   &.hide {
     opacity: 0;
   }
@@ -221,7 +219,6 @@ small {
   left: 50%;
   translate: -50% -50%;
   transition: opacity 1s;
-  transition-delay: var(--reveal-delay);
   perspective: 500px;
 
   &.hide .card-wrapper {
