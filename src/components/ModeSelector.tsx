@@ -1,6 +1,6 @@
 import { setLocalModeSettings } from "../modules/localStorage";
 import { useGameSettings, useGameState } from "../stores/gameState";
-import { ModeOptions } from "../types/types";
+import { ModeOptions, ModeSelectorProps } from "../types/types";
 
 const options: ModeOptions = {
   time: [15, 30, 60],
@@ -8,7 +8,7 @@ const options: ModeOptions = {
   infinite: null,
 };
 
-function ModeSelector() {
+function ModeSelector({ show }: ModeSelectorProps) {
   const { isTyping } = useGameState();
   const { modeSettings, setModeSettings } = useGameSettings();
 
@@ -34,7 +34,9 @@ function ModeSelector() {
   }
 
   return (
-    <div className={`mode-selector${isTyping ? " hide" : ""}`}>
+    <div
+      className={`mode-selector${isTyping || !show ? " hide" : ""}`}
+    >
       <div className="major-options">
         {Object.keys(options).map((option, index) => (
           <button

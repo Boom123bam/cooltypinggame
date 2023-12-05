@@ -4,8 +4,9 @@ import TextDisplay from "../components/TextDisplay";
 import GameCanvas from "../components/GameCanvas";
 import { useGameSettings, useGameState } from "../stores/gameState";
 import timer from "../modules/timer";
+import { TypingGameProps } from "../types/types";
 
-function TypingGame() {
+function TypingGame({ show }: TypingGameProps) {
   const [allWords, setallWords] = useState<string[]>([]);
   const { setIsTyping, isTyping, setPage } = useGameState();
   const { modeSettings } = useGameSettings();
@@ -169,17 +170,21 @@ function TypingGame() {
 
   return (
     <>
-      <TextDisplay
-        allWords={allWords}
-        typingWordIndex={typingState.typingWordIndex}
-        typingCharIndex={typingState.typingCharIndex}
-        typoFlag={typingState.typoFlag}
-      />
-      <GameCanvasMemo
-        stringToType={stringToType}
-        currentIndex={typingState.totalTypingCharIndex}
-      />
-      {timeLeft}
+      <div
+        className={`typing-game-wrapper ${show ? "show" : "hide"}`}
+      >
+        <TextDisplay
+          allWords={allWords}
+          typingWordIndex={typingState.typingWordIndex}
+          typingCharIndex={typingState.typingCharIndex}
+          typoFlag={typingState.typoFlag}
+        />
+        <GameCanvasMemo
+          stringToType={stringToType}
+          currentIndex={typingState.totalTypingCharIndex}
+        />
+        {timeLeft}
+      </div>
     </>
   );
 }

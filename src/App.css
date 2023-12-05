@@ -26,6 +26,14 @@ body {
   box-shadow: var(--glow);
 }
 
+.typing-game-wrapper {
+  transition: opacity 1s;
+  transition-delay: 1s;
+  &.hide {
+    opacity: 0;
+  }
+}
+
 .text-display {
   --rows: 3;
   --height: 4rem;
@@ -161,5 +169,14 @@ body {
   }
   .minor-options .option[aria-selected="true"]::before {
     transform: scale(1);
+  }
+}
+
+.stats {
+  transition: opacity 1s;
+  transition-delay: 2s;
+
+  &.hide {
+    opacity: 0;
   }
 }

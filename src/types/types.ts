@@ -24,3 +24,15 @@ export interface GameSettings {
   language: string;
   setModeSettings: (modeSettings: modeSettingsState) => void;
 }
+
+export interface ModeSelectorProps {
+  show: boolean;
+}
+
+export interface TypingGameProps {
+  show: boolean;
+}
+
+export interface StatsProps {
+  show: boolean;
+}
