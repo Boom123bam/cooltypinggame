@@ -1,3 +1,8 @@
+:root {
+  --saturation: 100%;
+  --lightness: 80%;
+}
+
 body {
   background-color: black;
   color: white;
@@ -9,6 +14,45 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.animated-gradient::before,
+.animated-gradient {
+  /* requires width & height(in rem) and bgsize properties */
+  background: linear-gradient(
+    atan(var(--height) / var(--width)),
+    hsla(0, var(--saturation), var(--lightness), 0.75),
+    hsla(72, var(--saturation), var(--lightness), 0.75),
+    hsla(144, var(--saturation), var(--lightness), 0.75),
+    hsla(216, var(--saturation), var(--lightness), 0.75),
+    hsla(0, var(--saturation), var(--lightness), 0.75),
+    hsla(72, var(--saturation), var(--lightness), 0.75),
+    hsla(144, var(--saturation), var(--lightness), 0.75),
+    hsla(216, var(--saturation), var(--lightness), 0.75),
+    hsla(360, var(--saturation), var(--lightness), 0.75)
+  );
+  background-repeat: repeat;
+  animation: gradient 60s linear infinite;
+  background-size: var(--bgsize) var(--bgsize);
+}
+
+.animated-gradient {
+  width: calc(var(--width) * 1rem);
+  height: calc(var(--height) * 1rem);
+  position: relative;
+}
+
+.animated-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  filter: blur(1.5rem);
+}
+
+@keyframes gradient {
+  100% {
+    background-position: var(--bgsize) calc(-1 * var(--bgsize));
+  }
 }
 
 .gradient {
@@ -178,5 +222,14 @@ body {
 
   &.hide {
     opacity: 0;
+  }
+
+  .glow-card {
+    /* properties for animated gradient */
+    --bgsize: 500%;
+    --width: 22;
+    --height: 25;
+
+    border-radius: 1rem;
   }
 }
