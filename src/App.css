@@ -1,13 +1,13 @@
 :root {
   --saturation: 100%;
-  --lightness: 80%;
+  --lightness: 90%;
 }
 
 body {
   background-color: black;
   color: white;
   font-family: "JetBrains Mono", monospace;
-  --glow: 0px 0px 8.8px 3px rgba(255, 255, 255, 0.5);
+  --glow: 0px 0px 12px 8px rgba(255, 255, 255, 0.3);
 }
 
 #root {
@@ -20,38 +20,25 @@ small {
   font-size: 0.75rem;
 }
 
-.animated-gradient::before,
 .animated-gradient {
   /* requires width & height(in rem) and bgsize properties */
   background: linear-gradient(
     atan(var(--height) / var(--width)),
-    hsla(0, var(--saturation), var(--lightness), 0.75),
-    hsla(72, var(--saturation), var(--lightness), 0.75),
-    hsla(144, var(--saturation), var(--lightness), 0.75),
-    hsla(216, var(--saturation), var(--lightness), 0.75),
-    hsla(0, var(--saturation), var(--lightness), 0.75),
-    hsla(72, var(--saturation), var(--lightness), 0.75),
-    hsla(144, var(--saturation), var(--lightness), 0.75),
-    hsla(216, var(--saturation), var(--lightness), 0.75),
-    hsla(360, var(--saturation), var(--lightness), 0.75)
+    hsl(0, var(--saturation), var(--lightness)),
+    hsl(72, var(--saturation), var(--lightness)),
+    hsl(144, var(--saturation), var(--lightness)),
+    hsl(216, var(--saturation), var(--lightness)),
+    hsl(0, var(--saturation), var(--lightness)),
+    hsl(72, var(--saturation), var(--lightness)),
+    hsl(144, var(--saturation), var(--lightness)),
+    hsl(216, var(--saturation), var(--lightness)),
+    hsl(360, var(--saturation), var(--lightness))
   );
   background-repeat: repeat;
   animation: gradient 60s linear infinite;
   background-size: var(--bgsize) var(--bgsize);
-}
-
-.animated-gradient {
   width: calc(var(--width) * 1rem);
   height: calc(var(--height) * 1rem);
-  position: relative;
-}
-
-.animated-gradient::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  filter: blur(1.5rem);
-  z-index: -1;
 }
 
 @keyframes gradient {
@@ -104,10 +91,10 @@ small {
   padding-top: var(--line-height);
   -webkit-mask-image: linear-gradient(
     0deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 1) var(--line-height),
-    rgba(255, 255, 255, 1) calc(100% - var(--line-height)),
-    rgba(255, 255, 255, 0) 100%
+    transparent 0%,
+    white var(--line-height),
+    white calc(100% - var(--line-height)),
+    transparent 100%
   );
   overflow: hidden;
 
@@ -235,6 +222,7 @@ small {
     opacity: 0;
   }
 }
+
 .stats .glow-card {
   /* properties for animated gradient */
   --bgsize: 500%;
@@ -258,7 +246,7 @@ small {
     border-radius: 1rem;
 
     mix-blend-mode: difference;
-    background: #9b9b9b;
+    background: #999999;
     box-shadow: 0px 0px 12px 8px #00000075 inset;
 
     justify-content: center;
@@ -295,7 +283,7 @@ small {
     }
   }
 
-  hr {
+  & hr {
     height: 3px;
     width: 50%;
     background: linear-gradient(90deg, black 50%, transparent 50%);
@@ -304,10 +292,10 @@ small {
     animation: dash 2s linear infinite;
     -webkit-mask-image: linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 1) 3rem,
-      rgba(255, 255, 255, 1) calc(100% - 3rem),
-      rgba(255, 255, 255, 0) 100%
+      transparent 0%,
+      white 3rem,
+      white calc(100% - 3rem),
+      transparent 100%
     );
   }
 
