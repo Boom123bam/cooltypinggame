@@ -45,6 +45,9 @@ function TypingGame() {
       typingCharIndex: 0,
       typoFlag: false,
     });
+    countDownRef.current?.stop();
+    if (modeSettings.mode == "time" && modeSettings.value)
+      setTimeLeft(modeSettings.value);
   }
 
   // On mount
