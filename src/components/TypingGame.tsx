@@ -91,7 +91,7 @@ function TypingGame() {
 
   // On key press
   useEffect(() => {
-    if (!lastKeyPressed) return;
+    if (!lastKeyPressed || page == "results") return;
     const { totalTypingCharIndex, typingCharIndex, typingWordIndex } =
       typingState;
 
