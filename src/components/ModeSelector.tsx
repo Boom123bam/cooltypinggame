@@ -1,8 +1,7 @@
+import { useGameSettings } from "../hooks/zustand/useGameSettings";
+import { useGameState } from "../hooks/zustand/useGameState";
 import { setLocalModeSettings } from "../modules/localStorage";
-import {
-  useGameSettings,
-  useGameState,
-} from "../hooks/zustand/gameState";
+
 import { ModeOptions } from "../types/types";
 
 const options: ModeOptions = {

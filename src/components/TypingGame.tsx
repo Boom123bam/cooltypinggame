@@ -2,11 +2,9 @@ import { useState, useEffect, useRef, memo } from "react";
 import { getRandomWordList } from "../modules/database";
 import TextDisplay from "../components/TextDisplay";
 import GameCanvas from "../components/GameCanvas";
-import {
-  useGameSettings,
-  useGameState,
-  useLastKey,
-} from "../hooks/zustand/gameState";
+import { useLastKey } from "../hooks/zustand/useLastKey";
+import { useGameSettings } from "../hooks/zustand/useGameSettings";
+import { useGameState } from "../hooks/zustand/useGameState";
 import timer from "../modules/timer";
 
 function TypingGame() {

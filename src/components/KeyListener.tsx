@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLastKey } from "../hooks/zustand/gameState";
+import { useLastKey } from "../hooks/zustand/useLastKey";
 
 function KeyListener() {
   const { setLastKey } = useLastKey();
