@@ -1,4 +1,16 @@
+import { useEffect } from "react";
+import { useGameState, useLastKey } from "../stores/gameState";
+
 function Stats() {
+  const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();
+  const { setPage } = useGameState();
+  useEffect(() => {
+    if (lastKeyPressed == "Enter") reset(); // TODO add transition with timeout
+  }, [lastKeyUpdateFlag]);
+
+  function reset() {
+    setPage("game");
+  }
   return (
     <div className={`stats`}>
       <div className="card-wrapper">
@@ -11,7 +23,7 @@ function Stats() {
             <hr />
 
             <div className="restart">
-              <button>
+              <button onClick={reset}>
                 <img src="icons/restart.svg" alt="restart" />
               </button>
               <small className="enter">enter</small>

@@ -10,7 +10,7 @@ import {
 import timer from "../modules/timer";
 
 function TypingGame() {
-  const { setIsTyping, isTyping, setPage } = useGameState();
+  const { setIsTyping, isTyping, setPage, page } = useGameState();
   const { modeSettings } = useGameSettings();
   const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();
 
@@ -58,9 +58,10 @@ function TypingGame() {
     );
   }, []);
 
-  // On settings change
+  // On settings change or page reset, reset
   useEffect(() => {
     if (!didMount.current) return;
+    if (page != "game") return;
 
     resetGame();
 
@@ -72,7 +73,7 @@ function TypingGame() {
     if (modeSettings.mode == "time" && modeSettings.value) {
       setTimeLeft(modeSettings.value);
     }
-  }, [modeSettings]);
+  }, [modeSettings, page]);
 
   // On each new word
   useEffect(() => {
@@ -115,8 +116,8 @@ function TypingGame() {
 
     // update state according to char typed
     if (
-      stringToType[totalTypingCharIndex] == lastKeyPressed ||
-      lastKeyPressed == "Enter"
+      stringToType[totalTypingCharIndex] == lastKeyPressed
+      // ||lastKeyPressed == "Enter"
     ) {
       // correct key
 
