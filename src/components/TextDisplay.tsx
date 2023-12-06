@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef, useState } from "react";
 import Word from "./Word";
-import { useGameSettings } from "../stores/gameState";
+import { useGameSettings } from "../hooks/zustand/gameState";
 
 const TextDisplay: React.FC<{
   allWords: string[];

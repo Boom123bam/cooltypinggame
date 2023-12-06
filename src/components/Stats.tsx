@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGameState, useLastKey } from "../stores/gameState";
+import { useGameState, useLastKey } from "../hooks/zustand/gameState";
 
 function Stats() {
   const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();

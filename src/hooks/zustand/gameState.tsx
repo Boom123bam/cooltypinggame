@@ -5,8 +5,8 @@ import {
   GameSettings,
   modeSettingsState,
   LastKeyStore,
-} from "../types/types";
-import { getLocalModeSettings } from "../modules/localStorage";
+} from "../../types/types";
+import { getLocalModeSettings } from "../../modules/localStorage";
 
 const useGameState = create<GameState>()((set) => ({
   page: "game",

@@ -6,7 +6,7 @@ import {
   useGameSettings,
   useGameState,
   useLastKey,
-} from "../stores/gameState";
+} from "../hooks/zustand/gameState";
 import timer from "../modules/timer";
 
 function TypingGame() {
