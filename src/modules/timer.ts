@@ -5,12 +5,12 @@ class timer {
   private onChange: (timeLeft: number) => void;
   private onEnd: () => void;
 
-  constructor(
-    onChange: (timeLeft: number) => void,
-    onEnd: () => void
-  ) {
-    this.onChange = onChange;
-    this.onEnd = onEnd;
+  constructor(args: {
+    onChange: (timeLeft: number) => void;
+    onEnd: () => void;
+  }) {
+    this.onChange = args.onChange;
+    this.onEnd = args.onEnd;
   }
 
   start(timeLeft: number) {

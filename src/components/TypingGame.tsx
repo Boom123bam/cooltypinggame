@@ -52,10 +52,10 @@ function TypingGame() {
     if (!didMount.current) return;
 
     // instantiate timer
-    countDownRef.current = new timer(
-      (timeLeft) => setTimeLeft(timeLeft),
-      () => setPage("results")
-    );
+    countDownRef.current = new timer({
+      onChange: (timeLeft) => setTimeLeft(timeLeft),
+      onEnd: () => setPage("results"),
+    });
   }, []);
 
   // On settings change or page reset, reset
