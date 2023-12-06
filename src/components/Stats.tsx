@@ -1,8 +1,6 @@
-import { StatsProps } from "../types/types";
-
-function Stats({ show }: StatsProps) {
+function Stats() {
   return (
-    <div className={`stats ${show ? "show" : "hide"}`}>
+    <div className={`stats`}>
       <div className="card-wrapper">
         <div className="glow-card animated-gradient glow-shadow">
           <div className="inner">

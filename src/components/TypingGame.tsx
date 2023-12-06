@@ -8,9 +8,8 @@ import {
   useLastKey,
 } from "../stores/gameState";
 import timer from "../modules/timer";
-import { TypingGameProps } from "../types/types";
 
-function TypingGame({ show }: TypingGameProps) {
+function TypingGame() {
   const { setIsTyping, isTyping, setPage } = useGameState();
   const { modeSettings } = useGameSettings();
   const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();
@@ -162,9 +161,7 @@ function TypingGame({ show }: TypingGameProps) {
 
   return (
     <>
-      <div
-        className={`typing-game-wrapper ${show ? "show" : "hide"}`}
-      >
+      <div className={`typing-game-wrapper`}>
         <TextDisplay
           allWords={allWords}
           typingWordIndex={typingState.typingWordIndex}

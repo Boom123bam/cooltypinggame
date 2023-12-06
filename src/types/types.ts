@@ -30,15 +30,3 @@ export interface LastKeyStore {
   lastKeyUpdateFlag: boolean;
   setLastKey: (lastKeyPressed: string) => void;
 }
-
-export interface ModeSelectorProps {
-  show: boolean;
-}
-
-export interface TypingGameProps {
-  show: boolean;
-}
-
-export interface StatsProps {
-  show: boolean;
-}

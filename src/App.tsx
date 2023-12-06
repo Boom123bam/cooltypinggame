@@ -9,9 +9,11 @@ function App() {
   const { page } = useGameState();
   return (
     <>
-      <ModeSelector show={page == "game"} />
-      <TypingGame show={page == "game"} />
-      {/* <Stats show={page == "results"} /> */}
+      {page == "game" && <ModeSelector />}
+
+      <TypingGame />
+      {page == "results" && <Stats />}
+
       <KeyListener />
     </>
   );
