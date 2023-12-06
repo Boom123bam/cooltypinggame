@@ -1,4 +1,4 @@
-import { modeSettingsState } from "./../types/types";
+import { modeSettingsState } from "../types/types";
 
 function setLocalModeSettings(modeSettings: modeSettingsState) {
   localStorage.setItem("modeSettings", JSON.stringify(modeSettings));

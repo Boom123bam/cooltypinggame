@@ -2,8 +2,8 @@ import { Canvas, useThree } from "@react-three/fiber";
 import TextTunnel from "./TextTunnnel";
 import { FC, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import textMaterial from "../modules/textMaterial";
-import { cameraDist, cameraMoveDuration } from "../modules/constants";
+import textMaterial from "../utils/textMaterial";
+import { cameraDist, cameraMoveDuration } from "../constants";
 
 interface CameraControlsProps {
   stringToType: string;

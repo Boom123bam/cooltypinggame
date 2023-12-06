@@ -7,7 +7,7 @@ import {
 } from "react";
 import { ShaderMaterial } from "three";
 import TextRing from "./TextRing";
-import { letterWidth, maxCharsToShow } from "../modules/constants";
+import { letterWidth, maxCharsToShow } from "../constants";
 
 const TextTunnel: React.FC<{
   typedString: string;

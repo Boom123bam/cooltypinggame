@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getLocalModeSettings } from "../../modules/localStorage";
+import { getLocalModeSettings } from "../../utils/localStorage";
 import { GameSettings, modeSettingsState } from "../../types/types";
 
 const useGameSettings = create<GameSettings>()((set) => {

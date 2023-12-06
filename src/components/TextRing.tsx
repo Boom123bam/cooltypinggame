@@ -6,7 +6,7 @@ import {
   letterWidth,
   numTunnelEdges,
   tunnelSize,
-} from "../modules/constants";
+} from "../constants";
 
 const TextRing: FC<{
   letter: string;

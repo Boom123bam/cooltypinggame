@@ -1,6 +1,6 @@
 import { useGameSettings } from "../hooks/zustand/useGameSettings";
 import { useGameState } from "../hooks/zustand/useGameState";
-import { setLocalModeSettings } from "../modules/localStorage";
+import { setLocalModeSettings } from "../utils/localStorage";
 
 import { ModeOptions } from "../types/types";
 
