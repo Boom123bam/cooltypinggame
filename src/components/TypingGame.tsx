@@ -48,6 +48,16 @@ function TypingGame() {
       setTimeLeft(modeSettings.value);
   }
 
+  function handleNewWord() {
+    if (modeSettings.mode == "words") return;
+
+    // infinite and time mode: fetch words when almost all words typed
+    if (updatingWordsRef.current) return;
+    if (typingState.typingWordIndex > allWords.length - 15) {
+      updateWords(50);
+    }
+  }
+
   // On mount
   useEffect(() => {
     if (!didMount.current) return;
@@ -75,17 +85,6 @@ function TypingGame() {
       setTimeLeft(modeSettings.value);
     }
   }, [modeSettings, page]);
-
-  // On each new word
-  useEffect(() => {
-    if (modeSettings.mode == "words") return;
-
-    // infinite and time mode: fetch words when almost all words typed
-    if (updatingWordsRef.current) return;
-    if (typingState.typingWordIndex > allWords.length - 15) {
-      updateWords(50);
-    }
-  }, [typingState.typingWordIndex]);
 
   // On key press
   useEffect(() => {
@@ -141,6 +140,7 @@ function TypingGame() {
           totalTypingCharIndex: totalTypingCharIndex + 1,
           typingCharIndex: 0,
         }));
+        handleNewWord();
       } else {
         setTypingState((currentTypingState) => ({
           ...currentTypingState,
