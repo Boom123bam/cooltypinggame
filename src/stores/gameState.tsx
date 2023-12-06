@@ -4,6 +4,7 @@ import {
   PageState,
   GameSettings,
   modeSettingsState,
+  LastKeyStore,
 } from "../types/types";
 import { getLocalModeSettings } from "../modules/localStorage";
 
@@ -32,4 +33,15 @@ const useGameSettings = create<GameSettings>()((set) => {
   };
 });
 
-export { useGameState, useGameSettings };
+const useLastKey = create<LastKeyStore>()((set) => ({
+  lastKeyPressed: "",
+  lastKeyUpdateFlag: true,
+  setLastKey: (lastKeyPressed: string) => {
+    set((state) => ({
+      lastKeyPressed,
+      lastKeyUpdateFlag: !state.lastKeyUpdateFlag,
+    }));
+  },
+}));
+
+export { useGameState, useGameSettings, useLastKey };

@@ -1,4 +1,5 @@
 import "./App.css";
+import KeyListener from "./components/KeyListener";
 import ModeSelector from "./components/ModeSelector";
 import Stats from "./components/Stats";
 import TypingGame from "./components/TypingGame";
@@ -10,7 +11,8 @@ function App() {
     <>
       <ModeSelector show={page == "game"} />
       <TypingGame show={page == "game"} />
-      <Stats show={page == "results"} />
+      {/* <Stats show={page == "results"} /> */}
+      <KeyListener />
     </>
   );
 }

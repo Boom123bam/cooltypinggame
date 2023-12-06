@@ -25,6 +25,12 @@ export interface GameSettings {
   setModeSettings: (modeSettings: modeSettingsState) => void;
 }
 
+export interface LastKeyStore {
+  lastKeyPressed: string;
+  lastKeyUpdateFlag: boolean;
+  setLastKey: (lastKeyPressed: string) => void;
+}
+
 export interface ModeSelectorProps {
   show: boolean;
 }

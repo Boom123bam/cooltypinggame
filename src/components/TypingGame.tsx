@@ -2,14 +2,20 @@ import { useState, useEffect, useRef, memo } from "react";
 import { getRandomWordList } from "../modules/database";
 import TextDisplay from "../components/TextDisplay";
 import GameCanvas from "../components/GameCanvas";
-import { useGameSettings, useGameState } from "../stores/gameState";
+import {
+  useGameSettings,
+  useGameState,
+  useLastKey,
+} from "../stores/gameState";
 import timer from "../modules/timer";
 import { TypingGameProps } from "../types/types";
 
 function TypingGame({ show }: TypingGameProps) {
-  const [allWords, setallWords] = useState<string[]>([]);
   const { setIsTyping, isTyping, setPage } = useGameState();
   const { modeSettings } = useGameSettings();
+  const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();
+
+  const [allWords, setallWords] = useState<string[]>([]);
   const [typingState, setTypingState] = useState({
     totalTypingCharIndex: 0,
     typingWordIndex: 0,
@@ -20,16 +26,9 @@ function TypingGame({ show }: TypingGameProps) {
   const countDownRef = useRef<timer>();
   const [timeLeft, setTimeLeft] = useState<number>(10);
 
-  const [updateKey, setUpdateKey] = useState(false);
-  const lastKeyRef = useRef("");
   const updatingWordsRef = useRef(false);
   const didMount = useRef(false);
   const stringToType = allWords.join(" ");
-
-  const handleKeyDown = (e: KeyboardEvent) => {
-    lastKeyRef.current = e.key;
-    setUpdateKey(!updateKey);
-  };
 
   const updateWords = async (amount: number, append = true) => {
     updatingWordsRef.current = true;
@@ -58,11 +57,6 @@ function TypingGame({ show }: TypingGameProps) {
       (timeLeft) => setTimeLeft(timeLeft),
       () => setPage("results")
     );
-
-    // Add event listener
-    document.addEventListener("keypress", handleKeyDown, {
-      once: true,
-    });
   }, []);
 
   // On settings change
@@ -94,8 +88,7 @@ function TypingGame({ show }: TypingGameProps) {
 
   // On key press
   useEffect(() => {
-    const key = lastKeyRef.current;
-    if (!key) return;
+    if (!lastKeyPressed) return;
     const { totalTypingCharIndex, typingCharIndex, typingWordIndex } =
       typingState;
 
@@ -122,7 +115,10 @@ function TypingGame({ show }: TypingGameProps) {
     }
 
     // update state according to char typed
-    if (stringToType[totalTypingCharIndex] == key || key == "Enter") {
+    if (
+      stringToType[totalTypingCharIndex] == lastKeyPressed ||
+      lastKeyPressed == "Enter"
+    ) {
       // correct key
 
       if (
@@ -158,11 +154,7 @@ function TypingGame({ show }: TypingGameProps) {
         typoFlag: !currentTypingState.typoFlag,
       }));
     }
-
-    document.addEventListener("keypress", handleKeyDown, {
-      once: true,
-    });
-  }, [updateKey]);
+  }, [lastKeyUpdateFlag]);
 
   useEffect(() => {
     didMount.current = true;
