@@ -1,6 +1,7 @@
 :root {
   --saturation: 100%;
   --lightness: 90%;
+  --gray: #404040;
 }
 
 body {
@@ -18,6 +19,10 @@ body {
 
 small {
   font-size: 0.75rem;
+}
+
+b {
+  font-weight: 700;
 }
 
 .animated-gradient {
@@ -213,7 +218,7 @@ small {
   }
 }
 
-.stats {
+.stats-screen {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -224,7 +229,7 @@ small {
   &.hide .card-wrapper {
     opacity: 0;
   }
-  &.show .card-wrapper {
+  .card-wrapper {
     opacity: 1;
     animation: reveal 3s;
   }
@@ -250,18 +255,18 @@ small {
   }
 }
 
-.stats .glow-card {
+.stats-screen .glow-card {
   /* properties for animated gradient */
   --bgsize: 500%;
   --width: 22;
-  --height: 25;
+  --height: 27;
 
   border-radius: 1.75rem;
   padding: 1rem;
 
   .inner,
+  .stats,
   .wpm,
-  .wpm > .number,
   .restart {
     display: flex;
     flex-direction: column;
@@ -277,20 +282,37 @@ small {
     box-shadow: 0px 0px 12px 8px #00000075 inset;
 
     justify-content: center;
-    gap: 1.25rem;
+    gap: 1.5rem;
     color: black;
   }
 
+  .wpm > .small,
+  .accuracy > .small,
+  .enter {
+    color: var(--gray);
+  }
+
+  .stats {
+    gap: 0.75rem;
+  }
+
   .wpm {
-    .number {
+    gap: 0.25rem;
+    > .big {
       font-size: 8rem;
       line-height: 80%;
-      font-weight: 700;
     }
   }
 
+  .accuracy {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
   .restart {
-    gap: 0.75rem;
+    gap: 0.5rem;
+
     > button {
       width: 3.5rem;
       aspect-ratio: 1;
@@ -312,8 +334,12 @@ small {
 
   & hr {
     height: 3px;
-    width: 50%;
-    background: linear-gradient(90deg, black 50%, transparent 50%);
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      var(--gray) 50%,
+      transparent 50%
+    );
     background-repeat: repeat-x;
     background-size: 16px;
     animation: dash 2s linear infinite;
@@ -327,7 +353,7 @@ small {
   }
 
   .enter {
-    border: 1px solid black;
+    border: 1px solid;
     border-radius: 0.3rem;
     padding: 0.1rem 0.5rem;
   }

@@ -22,6 +22,7 @@ function TypingGame() {
     typoFlag: false,
   });
 
+  const startTimeRef = useRef(0);
   const countDownRef = useRef<timer>();
   const [timeLeft, setTimeLeft] = useState<number>(10);
 
@@ -72,6 +73,7 @@ function TypingGame() {
       countDownRef.current
     )
       countDownRef.current.start(modeSettings.value);
+    else startTimeRef.current = Date.now();
   }
 
   function handleFinish() {
@@ -132,8 +134,24 @@ function TypingGame() {
   }
 
   function updateStats() {
-    const wpm = 10;
-    const accuracy = 98;
+    const totalTimeTaken =
+      modeSettings.mode == "time" && modeSettings.value
+        ? modeSettings.value
+        : (Date.now() - startTimeRef.current) / 1000;
+
+    const charsTyped = typingState.totalTypingCharIndex;
+    const errors = numWrongChars.current;
+
+    const totalWords = charsTyped / 5; // Assume average word length of 5 chars
+
+    // Calculate WPM and accuracy
+    const wpm = Math.round(totalWords / (totalTimeTaken / 60));
+    const accuracy = Math.round(
+      ((charsTyped - errors) / charsTyped) * 100
+    ); // Percentage
+
+    console.log("wpm:", wpm);
+    console.log("accuracy:", accuracy);
     setStats(wpm, accuracy);
   }
 
