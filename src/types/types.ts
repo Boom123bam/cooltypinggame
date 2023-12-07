@@ -30,3 +30,9 @@ export interface LastKeyStore {
   lastKeyUpdateFlag: boolean;
   setLastKey: (lastKeyPressed: string) => void;
 }
+
+export interface StatsStore {
+  wpm: number;
+  accuracy: number;
+  setStats: (wpm: number, accuracy: number) => void;
+}

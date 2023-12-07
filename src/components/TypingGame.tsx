@@ -5,12 +5,14 @@ import GameCanvas from "../components/GameCanvas";
 import { useLastKey } from "../hooks/zustand/useLastKey";
 import { useGameSettings } from "../hooks/zustand/useGameSettings";
 import { useGameState } from "../hooks/zustand/useGameState";
+import { useStats } from "../hooks/zustand/useStats";
 import timer from "../utils/timer";
 
 function TypingGame() {
   const { setIsTyping, isTyping, setPage, page } = useGameState();
   const { modeSettings } = useGameSettings();
   const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();
+  const { setStats } = useStats();
 
   const [allWords, setallWords] = useState<string[]>([]);
   const [typingState, setTypingState] = useState({
@@ -73,6 +75,7 @@ function TypingGame() {
   }
 
   function handleFinish() {
+    updateStats();
     setPage("results");
   }
 
@@ -126,6 +129,12 @@ function TypingGame() {
       numWrongChars.current++;
       lastWrongCharIndex.current = typingState.totalTypingCharIndex;
     }
+  }
+
+  function updateStats() {
+    const wpm = 10;
+    const accuracy = 98;
+    setStats(wpm, accuracy);
   }
 
   // On mount
