@@ -5,14 +5,14 @@ import { useStats } from "../hooks/zustand/useStats";
 
 function Stats() {
   const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();
-  const { setPage } = useGameState();
+  const { setIsFinished } = useGameState();
   const { wpm, accuracy } = useStats();
   useEffect(() => {
     if (lastKeyPressed == "Enter") reset(); // TODO add transition with timeout
   }, [lastKeyUpdateFlag]);
 
   function reset() {
-    setPage("game");
+    setIsFinished(false);
   }
   return (
     <div className={`stats-screen`}>

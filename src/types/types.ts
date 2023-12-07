@@ -1,8 +1,6 @@
-export type PageState = "game" | "results";
-
 export interface GameState {
-  page: PageState;
-  setPage: (page: PageState) => void;
+  isFinished: boolean;
+  setIsFinished: (isFinished: boolean) => void;
 
   isTyping: boolean;
   setIsTyping: (isTyping: boolean) => void;

@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { GameState, PageState } from "../../types/types";
+import { GameState } from "../../types/types";
 
 const useGameState = create<GameState>()((set) => ({
-  page: "game",
-  setPage: (page: PageState) => set({ page }),
+  isFinished: false,
+  setIsFinished: (isFinished: boolean) => set({ isFinished }),
   isTyping: false,
   setIsTyping: (isTyping: boolean) => set({ isTyping }),
 }));

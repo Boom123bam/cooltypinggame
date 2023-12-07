@@ -9,7 +9,8 @@ import { useStats } from "../hooks/zustand/useStats";
 import timer from "../utils/timer";
 
 function TypingGame() {
-  const { setIsTyping, isTyping, setPage, page } = useGameState();
+  const { setIsTyping, isTyping, setIsFinished, isFinished } =
+    useGameState();
   const { modeSettings } = useGameSettings();
   const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();
   const { setStats } = useStats();
@@ -78,7 +79,7 @@ function TypingGame() {
 
   function handleFinish() {
     updateStats();
-    setPage("results");
+    setIsFinished(true);
   }
 
   function handleCorrectKey() {
@@ -150,8 +151,6 @@ function TypingGame() {
       ((charsTyped - errors) / charsTyped) * 100
     ); // Percentage
 
-    console.log("wpm:", wpm);
-    console.log("accuracy:", accuracy);
     setStats(wpm, accuracy);
   }
 
@@ -166,10 +165,10 @@ function TypingGame() {
     });
   }, []);
 
-  // On settings change or page reset, reset
+  // On settings change or restart, reset
   useEffect(() => {
     if (!didMount.current) return;
-    if (page != "game") return;
+    if (isFinished) return;
 
     resetGame();
 
@@ -181,11 +180,11 @@ function TypingGame() {
     if (modeSettings.mode == "time" && modeSettings.value) {
       setTimeLeft(modeSettings.value);
     }
-  }, [modeSettings, page]);
+  }, [modeSettings, isFinished]);
 
   // On key press
   useEffect(() => {
-    if (!lastKeyPressed || page == "results") return;
+    if (!lastKeyPressed || isFinished) return;
     const { totalTypingCharIndex } = typingState;
 
     if (totalTypingCharIndex == 0) {

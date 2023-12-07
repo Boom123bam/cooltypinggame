@@ -6,13 +6,13 @@ import TypingGame from "./components/TypingGame";
 import { useGameState } from "./hooks/zustand/useGameState";
 
 function App() {
-  const { page } = useGameState();
+  const { isFinished } = useGameState();
   return (
     <>
-      {page == "game" && <ModeSelector />}
+      {!isFinished && <ModeSelector />}
 
       <TypingGame />
-      {page == "results" && <Stats />}
+      {isFinished && <Stats />}
 
       <KeyListener />
     </>
