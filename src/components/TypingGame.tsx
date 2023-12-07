@@ -142,7 +142,7 @@ function TypingGame() {
         ? modeSettings.value
         : (Date.now() - startTimeRef.current) / 1000;
 
-    const charsTyped = typingState.totalTypingCharIndex;
+    const charsTyped = typingState.totalTypingCharIndex + 1; // total index doesnt update for last character
     const errors = numWrongChars.current;
 
     const totalWords = charsTyped / 5; // Assume average word length of 5 chars
@@ -212,8 +212,8 @@ function TypingGame() {
 
     // update state according to char typed
     if (
-      stringToType[totalTypingCharIndex] == lastKeyPressed ||
-      lastKeyPressed == "Enter"
+      stringToType[totalTypingCharIndex] == lastKeyPressed
+      // || lastKeyPressed == "Enter"
     ) {
       handleCorrectKey();
     } else {
