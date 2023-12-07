@@ -334,7 +334,7 @@ b {
 
   & hr {
     height: 3px;
-    width: 100%;
+    width: 7.5rem;
     background: linear-gradient(
       90deg,
       var(--gray) 50%,
