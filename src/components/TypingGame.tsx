@@ -27,6 +27,9 @@ function TypingGame() {
   const didMount = useRef(false);
   const stringToType = allWords.join(" ");
 
+  const numWrongChars = useRef(0);
+  const lastWrongCharIndex = useRef(-1);
+
   const updateWords = async (amount: number, append = true) => {
     updatingWordsRef.current = true;
     const wordList = await getRandomWordList(amount, "English_1k");
@@ -46,6 +49,8 @@ function TypingGame() {
     countDownRef.current?.stop();
     if (modeSettings.mode == "time" && modeSettings.value)
       setTimeLeft(modeSettings.value);
+    numWrongChars.current = 0;
+    lastWrongCharIndex.current = -1;
   }
 
   function handleNewWord() {
@@ -116,8 +121,8 @@ function TypingGame() {
 
     // update state according to char typed
     if (
-      stringToType[totalTypingCharIndex] == lastKeyPressed
-      // ||lastKeyPressed == "Enter"
+      stringToType[totalTypingCharIndex] == lastKeyPressed ||
+      lastKeyPressed == "Enter"
     ) {
       // correct key
 
@@ -154,6 +159,10 @@ function TypingGame() {
         ...currentTypingState,
         typoFlag: !currentTypingState.typoFlag,
       }));
+      if (lastWrongCharIndex.current != totalTypingCharIndex) {
+        numWrongChars.current++;
+        lastWrongCharIndex.current = totalTypingCharIndex;
+      }
     }
   }, [lastKeyUpdateFlag]);
 
