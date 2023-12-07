@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import Word from "./Word";
 import { useGameSettings } from "../hooks/zustand/useGameSettings";
+import { useGameState } from "../hooks/zustand/useGameState";
 
 const TextDisplay: React.FC<{
   allWords: string[];
@@ -14,6 +15,7 @@ const TextDisplay: React.FC<{
   const cursorTimeoutRef = useRef<number | null>(null);
   const lastTypoFlagRef = useRef(false); // prevent typo on inintal render
   const { modeSettings } = useGameSettings();
+  const { page } = useGameState();
 
   function resetGame() {
     if (!scrollerRef.current) return;
@@ -22,8 +24,9 @@ const TextDisplay: React.FC<{
   }
 
   useEffect(() => {
+    if (page != "game") return;
     resetGame();
-  }, [modeSettings]);
+  }, [modeSettings, page]);
 
   // make cursor flash
   useEffect(() => {
