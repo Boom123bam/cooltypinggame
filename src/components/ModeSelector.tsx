@@ -1,14 +1,8 @@
 import { useGameSettings } from "../hooks/zustand/useGameSettings";
 import { useGameState } from "../hooks/zustand/useGameState";
 import { setLocalModeSettings } from "../utils/localStorage";
-
 import { ModeOptions } from "../types/types";
-
-const options: ModeOptions = {
-  time: [15, 30, 60],
-  words: [10, 25, 50],
-  infinite: null,
-};
+import { options } from "../constants";
 
 function ModeSelector() {
   const { isTyping } = useGameState();
