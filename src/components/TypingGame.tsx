@@ -22,6 +22,8 @@ function TypingGame() {
     typingCharIndex: 0,
     typoFlag: false,
   });
+  const charsTypedRef = useRef(0);
+  const stringToType = allWords.join(" ");
 
   const startTimeRef = useRef(0);
   const countDownRef = useRef<timer>();
@@ -29,7 +31,6 @@ function TypingGame() {
 
   const updatingWordsRef = useRef(false);
   const didMount = useRef(false);
-  const stringToType = allWords.join(" ");
 
   const numWrongChars = useRef(0);
   const lastWrongCharIndex = useRef(-1);
@@ -40,6 +41,8 @@ function TypingGame() {
     setallWords(append ? allWords.concat(wordList) : wordList);
     updatingWordsRef.current = false;
   };
+
+  charsTypedRef.current = typingState.typingCharIndex;
 
   function resetGame() {
     setallWords([]);
@@ -79,7 +82,6 @@ function TypingGame() {
 
   function handleFinish() {
     updateStats();
-    setIsFinished(true);
   }
 
   function handleCorrectKey() {
@@ -90,7 +92,7 @@ function TypingGame() {
       stringToType.length - 1 == typingState.totalTypingCharIndex
     ) {
       // finish
-      handleFinish();
+      setIsFinished(true);
       return;
     }
 
@@ -161,7 +163,7 @@ function TypingGame() {
     // instantiate timer
     countDownRef.current = new timer({
       onChange: (timeLeft) => setTimeLeft(timeLeft),
-      onEnd: handleFinish,
+      onEnd: () => setIsFinished(true),
     });
   }, []);
 
@@ -181,6 +183,10 @@ function TypingGame() {
       setTimeLeft(modeSettings.value);
     }
   }, [modeSettings, isFinished]);
+
+  useEffect(() => {
+    if (isFinished) handleFinish();
+  }, [isFinished]);
 
   // On key press
   useEffect(() => {
