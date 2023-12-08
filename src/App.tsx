@@ -9,7 +9,7 @@ function App() {
   const { isFinished } = useGameState();
   return (
     <>
-      {!isFinished && <ModeSelector />}
+      <ModeSelector />
 
       <TypingGame />
       {isFinished && <Stats />}

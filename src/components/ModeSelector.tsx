@@ -5,7 +5,7 @@ import { ModeOptions } from "../types/types";
 import { options } from "../constants";
 
 function ModeSelector() {
-  const { isTyping } = useGameState();
+  const { isTyping, isFinished } = useGameState();
   const { modeSettings, setModeSettings } = useGameSettings();
 
   function handleMajorOptionClick(option: keyof ModeOptions) {
@@ -30,7 +30,11 @@ function ModeSelector() {
   }
 
   return (
-    <div className={`mode-selector${isTyping ? " hide" : ""}`}>
+    <div
+      className={`mode-selector${
+        isTyping || isFinished ? " hide" : ""
+      }`}
+    >
       <div className="major-options">
         {Object.keys(options).map((option, index) => (
           <button
