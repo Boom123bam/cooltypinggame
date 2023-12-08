@@ -1,7 +1,8 @@
 :root {
   --saturation: 100%;
   --lightness: 90%;
-  --gray: #404040;
+  --gray-500: #646464;
+  --gray-700: #404040;
 }
 
 body {
@@ -80,14 +81,25 @@ b {
   }
 }
 
-.text-display {
-  --rows: 3;
-  --height: 4rem;
-  --line-height: calc(var(--height) / var(--rows));
+.text-display-wrapper {
   position: fixed;
   top: 50%;
   left: 50%;
   translate: -50% -50%;
+
+  > .timer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50% -150%;
+    color: var(--gray-500);
+  }
+}
+
+.text-display {
+  --rows: 3;
+  --height: 4rem;
+  --line-height: calc(var(--height) / var(--rows));
   mix-blend-mode: difference;
   width: 15rem;
   height: var(--height);
@@ -289,7 +301,7 @@ b {
   .wpm > .small,
   .accuracy > .small,
   .enter {
-    color: var(--gray);
+    color: var(--gray-700);
   }
 
   .stats {
@@ -337,7 +349,7 @@ b {
     width: 7.5rem;
     background: linear-gradient(
       90deg,
-      var(--gray) 50%,
+      var(--gray-700) 50%,
       transparent 50%
     );
     background-repeat: repeat-x;

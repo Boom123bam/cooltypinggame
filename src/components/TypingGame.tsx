@@ -228,17 +228,21 @@ function TypingGame() {
   return (
     <>
       <div className={`typing-game-wrapper`}>
-        <TextDisplay
-          allWords={allWords}
-          typingWordIndex={typingState.typingWordIndex}
-          typingCharIndex={typingState.typingCharIndex}
-          typoFlag={typingState.typoFlag}
-        />
+        <div className="text-display-wrapper">
+          {modeSettings.mode == "time" && (
+            <div className="timer">{timeLeft}</div>
+          )}
+          <TextDisplay
+            allWords={allWords}
+            typingWordIndex={typingState.typingWordIndex}
+            typingCharIndex={typingState.typingCharIndex}
+            typoFlag={typingState.typoFlag}
+          />
+        </div>
         <GameCanvasMemo
           stringToType={stringToType}
           currentIndex={typingState.totalTypingCharIndex}
         />
-        {timeLeft}
       </div>
     </>
   );
