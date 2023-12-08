@@ -158,18 +158,19 @@ function TypingGame() {
 
   // On mount
   useEffect(() => {
-    if (!didMount.current) return;
-
+    if (didMount.current) return;
     // instantiate timer
     countDownRef.current = new timer({
       onChange: (timeLeft) => setTimeLeft(timeLeft),
       onEnd: () => setIsFinished(true),
     });
+    return () => {
+      didMount.current = true;
+    };
   }, []);
 
   // On settings change or restart, reset
   useEffect(() => {
-    if (!didMount.current) return;
     if (isFinished) return;
 
     resetGame();
@@ -194,6 +195,7 @@ function TypingGame() {
     const { totalTypingCharIndex } = typingState;
 
     if (totalTypingCharIndex == 0) {
+      console.log("call handlestart");
       handleStart();
     }
 
@@ -220,10 +222,6 @@ function TypingGame() {
       handleWrongKey();
     }
   }, [lastKeyUpdateFlag]);
-
-  useEffect(() => {
-    didMount.current = true;
-  }, []);
 
   return (
     <>
