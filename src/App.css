@@ -243,16 +243,20 @@ b {
   }
   .card-wrapper {
     opacity: 1;
-    animation: reveal 3s;
-  }
-}
+    animation: reveal 2s;
+    transition: 0.35s;
+    transform: rotateX(10deg) rotateY(3deg);
 
-.card-wrapper {
-  transition: 0.5s;
-  transform: rotateX(10deg) rotateY(3deg);
+    &.out {
+      transition-timing-function: ease-in;
+      translate: 0 -60rem;
+      rotate: 0.75turn;
+      transform-origin: 80% 10%;
+    }
 
-  &:hover {
-    transform: none !important;
+    &:hover {
+      transform: none !important;
+    }
   }
 }
 
