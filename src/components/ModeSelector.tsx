@@ -11,19 +11,6 @@ function ModeSelector() {
   const { modeSettings, setModeSettings } = useGameSettings();
   const selectionIndicatorRef = useRef<HTMLSpanElement>(null);
 
-  const tl = gsap.timeline({ paused: true });
-
-  // Add animations to the timeline
-  tl.to(selectionIndicatorRef.current, {
-    height: "10%",
-    duration: 0.15,
-    ease: "power2.out",
-  }).to(selectionIndicatorRef.current, {
-    height: "100%",
-    duration: 0.15,
-    ease: "power2.in",
-  });
-
   function handleMajorOptionClick(option: keyof ModeOptions) {
     if (modeSettings.mode != option) {
       const optionValues = options[option];
@@ -35,7 +22,19 @@ function ModeSelector() {
             : null,
       };
       if (selectionIndicatorRef.current) {
-        tl.play();
+        // tl.play();
+        gsap.to(selectionIndicatorRef.current, {
+          height: "10%",
+          duration: 0.15,
+          ease: "power2.out",
+          onComplete: () => {
+            gsap.to(selectionIndicatorRef.current, {
+              height: "100%",
+              duration: 0.15,
+              ease: "power2.in",
+            });
+          },
+        });
       }
       setModeSettings(newSettings);
       setLocalModeSettings(newSettings);
