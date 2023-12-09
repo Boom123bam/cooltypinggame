@@ -20,6 +20,11 @@ body {
   align-items: center;
 }
 
+*:focus-visible {
+  outline: 1px solid white;
+  outline-offset: 2px;
+}
+
 small {
   font-size: 0.75rem;
 }
@@ -168,6 +173,11 @@ b {
 
   &.hide {
     translate: 0 -150%;
+  }
+
+  .major-options .option,
+  .minor-options .option {
+    border-radius: 100px;
   }
 
   .major-options {
@@ -370,6 +380,7 @@ b {
       aspect-ratio: 1;
       border-radius: 0.5rem;
       padding: 0.5rem;
+      outline-color: black;
 
       > img {
         transition: rotate 0.5s;
