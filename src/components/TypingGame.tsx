@@ -194,8 +194,7 @@ function TypingGame() {
     if (!lastKeyPressed || isFinished) return;
     const { totalTypingCharIndex } = typingState;
 
-    if (totalTypingCharIndex == 0) {
-      console.log("call handlestart");
+    if (totalTypingCharIndex == 0 && numWrongChars.current == 0) {
       handleStart();
     }
 
