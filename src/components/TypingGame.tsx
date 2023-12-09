@@ -51,7 +51,7 @@ function TypingGame() {
       totalTypingCharIndex: 0,
       typingWordIndex: 0,
       typingCharIndex: 0,
-      typoFlag: false,
+      typoFlag: typingState.typoFlag,
     });
     countDownRef.current?.stop();
     if (modeSettings.mode == "time" && modeSettings.value)
