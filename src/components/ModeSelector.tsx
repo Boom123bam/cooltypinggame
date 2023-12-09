@@ -57,6 +57,7 @@ function ModeSelector() {
         {Object.keys(options).map((option, index) => (
           <button
             key={index}
+            tabIndex={isTyping || isFinished ? -1 : 1}
             className="option"
             aria-selected={
               modeSettings.mode === option ? "true" : "false"
@@ -77,6 +78,7 @@ function ModeSelector() {
         {options[modeSettings.mode]?.map((option, index) => (
           <button
             key={index}
+            tabIndex={isTyping || isFinished ? -1 : 1}
             className="option"
             aria-selected={
               modeSettings.value === option ? "true" : "false"
