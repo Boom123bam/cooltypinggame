@@ -1,6 +1,8 @@
 :root {
   --saturation: 100%;
   --lightness: 90%;
+  --gray-100: #a0a0a0;
+  --gray-300: #909090;
   --gray-500: #646464;
   --gray-700: #404040;
 }
@@ -244,18 +246,20 @@ b {
   .card-wrapper {
     opacity: 1;
     animation: reveal 2s;
-    transition: 0.35s;
-    transform: rotateX(10deg) rotateY(3deg);
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+    transform: rotateX(calc((var(--mouse-y, 0.5) - 0.5) * -0.075deg))
+      rotateY(calc((var(--mouse-x, 0.5) - 0.5) * 0.075deg));
+
+    &:hover {
+      scale: 1.075;
+    }
 
     &.out {
       transition-timing-function: ease-in;
       translate: 0 -60rem;
       rotate: 0.75turn;
       transform-origin: 80% 10%;
-    }
-
-    &:hover {
-      transform: none !important;
     }
   }
 }
@@ -266,7 +270,7 @@ b {
     opacity: 0;
   }
   to {
-    transform: scale(1) rotateX(10deg) rotateZ(0) rotateY(3deg);
+    transform: scale(1);
     opacity: 1;
   }
 }
@@ -294,8 +298,10 @@ b {
     border-radius: 1rem;
 
     mix-blend-mode: difference;
-    background: #999999;
-    box-shadow: 0px 0px 12px 8px #00000075 inset;
+    background: var(--gray-100);
+    box-shadow: calc((var(--mouse-x, 0.5) - 0.5) * -0.05px)
+      calc((var(--mouse-y, 0.5) - 0.5) * -0.05px) 16px 8px #00000075
+      inset;
 
     justify-content: center;
     gap: 1.5rem;
