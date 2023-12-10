@@ -1,21 +1,24 @@
 import { create } from "zustand";
-import { getLocalModeSettings } from "../../utils/localStorage";
-import { GameSettings, modeSettingsState } from "../../types/types";
+import { getLocalGameModeSettings } from "../../utils/localStorage";
+import {
+  GameSettings,
+  gamemodeSettingsState,
+} from "../../types/types";
 
 const useGameSettings = create<GameSettings>()((set) => {
-  let modeSettings = getLocalModeSettings();
-  if (!modeSettings)
-    modeSettings = {
-      mode: "time",
+  let gamemodeSettings = getLocalGameModeSettings();
+  if (!gamemodeSettings)
+    gamemodeSettings = {
+      gamemode: "time",
       value: 30,
     };
 
   return {
-    setModeSettings: (modeSettings: modeSettingsState) =>
+    setGameModeSettings: (gamemodeSettings: gamemodeSettingsState) =>
       set({
-        modeSettings: modeSettings,
+        gamemodeSettings: gamemodeSettings,
       }),
-    modeSettings,
+    gamemodeSettings,
     language: "English_1k",
   };
 });

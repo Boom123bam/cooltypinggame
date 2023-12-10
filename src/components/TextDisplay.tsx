@@ -14,7 +14,7 @@ const TextDisplay: React.FC<{
   const [showCursor, setShowCursor] = useState(true);
   const cursorTimeoutRef = useRef<number | null>(null);
   const lastTypoFlagRef = useRef(false); // prevent typo on inintal render
-  const { modeSettings } = useGameSettings();
+  const { gamemodeSettings } = useGameSettings();
   const { isFinished } = useGameState();
 
   function resetGame() {
@@ -26,7 +26,7 @@ const TextDisplay: React.FC<{
   useEffect(() => {
     if (isFinished) return;
     resetGame();
-  }, [modeSettings, isFinished]);
+  }, [gamemodeSettings, isFinished]);
 
   // make cursor flash
   useEffect(() => {

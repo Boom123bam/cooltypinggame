@@ -1,21 +1,21 @@
 import { useGameSettings } from "../hooks/zustand/useGameSettings";
 import { useGameState } from "../hooks/zustand/useGameState";
-import { setLocalModeSettings } from "../utils/localStorage";
-import { ModeOptions } from "../types/types";
+import { setLocalGameModeSettings } from "../utils/localStorage";
+import { GameModeOptions } from "../types/types";
 import { options } from "../constants";
 import { useRef } from "react";
 import gsap from "gsap";
 
-function ModeSelector() {
+function GameModeSelector() {
   const { isTyping, isFinished } = useGameState();
-  const { modeSettings, setModeSettings } = useGameSettings();
+  const { gamemodeSettings, setGameModeSettings } = useGameSettings();
   const selectionIndicatorRef = useRef<HTMLSpanElement>(null);
 
-  function handleMajorOptionClick(option: keyof ModeOptions) {
-    if (modeSettings.mode != option) {
+  function handleMajorOptionClick(option: keyof GameModeOptions) {
+    if (gamemodeSettings.gamemode != option) {
       const optionValues = options[option];
       const newSettings = {
-        mode: option,
+        gamemode: option,
         value:
           optionValues && optionValues.length > 0
             ? optionValues[0]
@@ -36,20 +36,20 @@ function ModeSelector() {
           },
         });
       }
-      setModeSettings(newSettings);
-      setLocalModeSettings(newSettings);
+      setGameModeSettings(newSettings);
+      setLocalGameModeSettings(newSettings);
     }
   }
 
   function handleMinorOptionClick(option: number) {
-    const newSettings = { ...modeSettings, value: option };
-    setModeSettings(newSettings);
-    setLocalModeSettings(newSettings);
+    const newSettings = { ...gamemodeSettings, value: option };
+    setGameModeSettings(newSettings);
+    setLocalGameModeSettings(newSettings);
   }
 
   return (
     <div
-      className={`mode-selector${
+      className={`game-mode-selector${
         isTyping || isFinished ? " hide" : ""
       }`}
     >
@@ -60,10 +60,10 @@ function ModeSelector() {
             tabIndex={isTyping || isFinished ? -1 : 1}
             className="option"
             aria-selected={
-              modeSettings.mode === option ? "true" : "false"
+              gamemodeSettings.gamemode === option ? "true" : "false"
             }
             onClick={() =>
-              handleMajorOptionClick(option as keyof ModeOptions)
+              handleMajorOptionClick(option as keyof GameModeOptions)
             }
           >
             {option}
@@ -75,13 +75,13 @@ function ModeSelector() {
         ></span>
       </div>
       <div className="minor-options">
-        {options[modeSettings.mode]?.map((option, index) => (
+        {options[gamemodeSettings.gamemode]?.map((option, index) => (
           <button
             key={index}
             tabIndex={isTyping || isFinished ? -1 : 1}
             className="option"
             aria-selected={
-              modeSettings.value === option ? "true" : "false"
+              gamemodeSettings.value === option ? "true" : "false"
             }
             onClick={() => handleMinorOptionClick(option)}
           >
@@ -93,4 +93,4 @@ function ModeSelector() {
   );
 }
 
-export default ModeSelector;
+export default GameModeSelector;

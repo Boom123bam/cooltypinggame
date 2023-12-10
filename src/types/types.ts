@@ -6,21 +6,23 @@ export interface GameState {
   setIsTyping: (isTyping: boolean) => void;
 }
 
-export interface ModeOptions {
+export interface GameModeOptions {
   time: number[];
   words: number[];
   infinite: null;
 }
 
-export interface modeSettingsState {
-  mode: keyof ModeOptions;
+export interface gamemodeSettingsState {
+  gamemode: keyof GameModeOptions;
   value: number | null;
 }
 
 export interface GameSettings {
-  modeSettings: modeSettingsState;
+  gamemodeSettings: gamemodeSettingsState;
   language: string;
-  setModeSettings: (modeSettings: modeSettingsState) => void;
+  setGameModeSettings: (
+    gamemodeSettings: gamemodeSettingsState
+  ) => void;
 }
 
 export interface LastKeyStore {

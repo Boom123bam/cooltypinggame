@@ -11,7 +11,7 @@ import timer from "../utils/timer";
 function TypingGame() {
   const { setIsTyping, isTyping, setIsFinished, isFinished } =
     useGameState();
-  const { modeSettings } = useGameSettings();
+  const { gamemodeSettings } = useGameSettings();
   const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();
   const { setStats } = useStats();
 
@@ -54,16 +54,16 @@ function TypingGame() {
       typoFlag: typingState.typoFlag,
     });
     countDownRef.current?.stop();
-    if (modeSettings.mode == "time" && modeSettings.value)
-      setTimeLeft(modeSettings.value);
+    if (gamemodeSettings.gamemode == "time" && gamemodeSettings.value)
+      setTimeLeft(gamemodeSettings.value);
     numWrongChars.current = 0;
     lastWrongCharIndex.current = -1;
   }
 
   function handleNewWord() {
-    if (modeSettings.mode == "words") return;
+    if (gamemodeSettings.gamemode == "words") return;
 
-    // infinite and time mode: fetch words when almost all words typed
+    // infinite and time gamemode: fetch words when almost all words typed
     if (updatingWordsRef.current) return;
     if (typingState.typingWordIndex > allWords.length - 15) {
       updateWords(50);
@@ -72,11 +72,11 @@ function TypingGame() {
 
   function handleStart() {
     if (
-      modeSettings.mode == "time" &&
-      modeSettings.value &&
+      gamemodeSettings.gamemode == "time" &&
+      gamemodeSettings.value &&
       countDownRef.current
     )
-      countDownRef.current.start(modeSettings.value);
+      countDownRef.current.start(gamemodeSettings.value);
     else startTimeRef.current = Date.now();
   }
 
@@ -88,7 +88,7 @@ function TypingGame() {
     // correct key
 
     if (
-      modeSettings.mode == "words" &&
+      gamemodeSettings.gamemode == "words" &&
       stringToType.length - 1 == typingState.totalTypingCharIndex
     ) {
       // finish
@@ -138,8 +138,8 @@ function TypingGame() {
 
   function updateStats() {
     const totalTimeTaken =
-      modeSettings.mode == "time" && modeSettings.value
-        ? modeSettings.value
+      gamemodeSettings.gamemode == "time" && gamemodeSettings.value
+        ? gamemodeSettings.value
         : (Date.now() - startTimeRef.current) / 1000;
 
     const charsTyped = typingState.totalTypingCharIndex + 1; // total index doesnt update for last character
@@ -175,15 +175,21 @@ function TypingGame() {
 
     resetGame();
 
-    if (modeSettings.mode == "words" && modeSettings.value)
-      updateWords(modeSettings.value, false);
-    // infinite and time mode, use continuous fetch
+    if (
+      gamemodeSettings.gamemode == "words" &&
+      gamemodeSettings.value
+    )
+      updateWords(gamemodeSettings.value, false);
+    // infinite and time gamemode, use continuous fetch
     else updateWords(50, false);
 
-    if (modeSettings.mode == "time" && modeSettings.value) {
-      setTimeLeft(modeSettings.value);
+    if (
+      gamemodeSettings.gamemode == "time" &&
+      gamemodeSettings.value
+    ) {
+      setTimeLeft(gamemodeSettings.value);
     }
-  }, [modeSettings, isFinished]);
+  }, [gamemodeSettings, isFinished]);
 
   useEffect(() => {
     if (isFinished) handleFinish();
@@ -226,7 +232,7 @@ function TypingGame() {
     <>
       <div className={`typing-game-wrapper`}>
         <div className="text-display-wrapper">
-          {modeSettings.mode == "time" && (
+          {gamemodeSettings.gamemode == "time" && (
             <div className="timer">{timeLeft}</div>
           )}
           <TextDisplay

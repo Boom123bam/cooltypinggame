@@ -1,11 +1,16 @@
-import { modeSettingsState } from "../types/types";
+import { gamemodeSettingsState } from "../types/types";
 
-function setLocalModeSettings(modeSettings: modeSettingsState) {
-  localStorage.setItem("modeSettings", JSON.stringify(modeSettings));
+function setLocalGameModeSettings(
+  gamemodeSettings: gamemodeSettingsState
+) {
+  localStorage.setItem(
+    "gamemodeSettings",
+    JSON.stringify(gamemodeSettings)
+  );
 }
 
-function getLocalModeSettings() {
-  const settings = localStorage.getItem("modeSettings");
+function getLocalGameModeSettings() {
+  const settings = localStorage.getItem("gamemodeSettings");
   return settings ? JSON.parse(settings) : null;
 }
 
@@ -19,8 +24,8 @@ function getLocalLanguageData(language: string) {
 }
 
 export {
-  setLocalModeSettings,
-  getLocalModeSettings,
+  setLocalGameModeSettings,
+  getLocalGameModeSettings,
   setLocalLanguageData,
   getLocalLanguageData,
 };
