@@ -7,6 +7,7 @@ import { useGameSettings } from "../hooks/zustand/useGameSettings";
 import { useGameState } from "../hooks/zustand/useGameState";
 import { useStats } from "../hooks/zustand/useStats";
 import timer from "../utils/timer";
+import { allowAutoType } from "../constants";
 
 function TypingGame() {
   const { setIsTyping, isTyping, setIsFinished, isFinished } =
@@ -219,8 +220,8 @@ function TypingGame() {
 
     // update state according to char typed
     if (
-      stringToType[totalTypingCharIndex] == lastKeyPressed
-      // || lastKeyPressed == "Enter"
+      stringToType[totalTypingCharIndex] == lastKeyPressed ||
+      (allowAutoType && lastKeyPressed == "Enter")
     ) {
       handleCorrectKey();
     } else {

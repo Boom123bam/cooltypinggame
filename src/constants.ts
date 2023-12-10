@@ -11,6 +11,7 @@ const options: GameModeOptions = {
   words: [10, 25, 50],
   infinite: null,
 };
+const allowAutoType = false;
 
 export {
   cameraDist,
@@ -20,4 +21,5 @@ export {
   letterWidth,
   maxCharsToShow,
   options,
+  allowAutoType,
 };
