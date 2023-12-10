@@ -6,6 +6,7 @@ import {
   letterWidth,
   numTunnelEdges,
   tunnelSize,
+  twistFactor,
 } from "../constants";
 
 const TextRing: FC<{
@@ -16,14 +17,14 @@ const TextRing: FC<{
   const groupRef = useRef<Group>(null);
   useEffect(() => {
     if (groupRef.current) {
-      groupRef.current.rotation.z = index * 0.15;
+      groupRef.current.rotation.z = index * twistFactor;
       gsap.fromTo(
         groupRef.current.rotation,
         {
-          z: index * 0.15,
+          z: index * twistFactor,
         },
         {
-          z: index * 0.15 + 1.5,
+          z: index * twistFactor + 0.5,
           duration: 5,
         }
       );
@@ -58,26 +59,30 @@ const Char3d: FC<{
 }> = ({ letter, textMaterialRef }) => {
   const textRef = useRef<any>(null);
   useEffect(() => {
-    gsap.to(textRef.current.position, {
-      x: -tunnelSize,
-      y: 0,
-      duration: 0.5,
-    });
+    const delay = Math.random() * 0.25;
+    const inDuration = 0.25;
 
     gsap.to(textRef.current, {
-      fillOpacity: 1,
-      duration: 0.5,
+      duration: inDuration,
+      fontSize: 1.3,
+      ease: "power3.out",
+      delay,
+
       onComplete: function () {
         gsap.to(textRef.current, {
           fillOpacity: 0.1,
-          duration: 1,
+          duration: 0.25,
+          fontSize: 1,
+          ease: "power2.in",
         });
       },
     });
 
     gsap.to(textRef.current.rotation, {
       y: Math.PI / 2,
-      duration: 0.5,
+      duration: inDuration,
+      ease: "power3.out",
+      delay,
     });
     gsap.to(textRef.current.rotation, {
       x: (Math.random() - 0.5) * 5,
@@ -89,15 +94,10 @@ const Char3d: FC<{
       ref={textRef}
       font={"fonts/Astronomic-Mono.ttf"}
       anchorX={"left"}
-      position={[-1.8 - tunnelSize, (Math.random() - 0.5) * 3, 0]}
-      rotation={[
-        // (Math.random() - 0.5) * 3,
-        0,
-        Math.PI / 2 - 0.5,
-        0,
-      ]}
+      position={[-tunnelSize, 0, 0]}
+      rotation={[0, Math.PI / 2 - 0.5, 0]}
       material={textMaterialRef.current ?? undefined}
-      fillOpacity={0}
+      fontSize={"0"}
     >
       {letter}
     </Text>
