@@ -8,6 +8,7 @@ function Footer() {
         <a href="https://cooltypinggame.com">cooltypinggame.com</a>
         <a
           href="https://github.com/Boom123bam/cooltypinggame"
+          target="blank"
           className="github"
         >
           <img src="github.svg" alt="" />
