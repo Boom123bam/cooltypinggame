@@ -1,5 +1,7 @@
 # Cooltypinggame
 
+[cooltypinggame.com](https://cooltypinggame.com)
+
 A 3D tying game/test. Watch the letters appear as you type.
 
 ## Built with
