@@ -1,30 +1,31 @@
-# React + TypeScript + Vite
+# Cooltypinggame
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A 3D tying game/test. Watch the letters appear as you type.
 
-Currently, two official plugins are available:
+## Built with
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React + vite
+- Three.js (React Three Fiber)
+- Zustand
 
-## Expanding the ESLint configuration
+## Contributing
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Pull requests are welcome.
 
-- Configure the top-level `parserOptions` property like this:
+### Setup
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+1. **Fork** the repository on GitHub.
+
+2. **Clone** your forked repository to your local machine.
+
+3. **Install** depenencies and run
+
+```
+cd cooltypinggame
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## License
+
+[Apache 2.0](https://choosealicense.com/licenses/apache-2.0/)
