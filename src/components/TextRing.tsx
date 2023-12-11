@@ -67,6 +67,7 @@ const Char3d: FC<{
       fontSize: 1.3,
       ease: "power3.out",
       delay,
+      fillOpacity: 1,
 
       onComplete: function () {
         gsap.to(textRef.current, {
@@ -97,7 +98,8 @@ const Char3d: FC<{
       position={[-tunnelSize, 0, 0]}
       rotation={[0, Math.PI / 2 - 0.5, 0]}
       material={textMaterialRef.current ?? undefined}
-      fontSize={"0"}
+      fontSize={0}
+      fillOpacity={0}
     >
       {letter}
     </Text>
