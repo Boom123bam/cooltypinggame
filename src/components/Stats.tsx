@@ -1,11 +1,9 @@
 import { useEffect, useRef } from "react";
-import { useLastKey } from "../hooks/zustand/useLastKey";
 import { useGameState } from "../hooks/zustand/useGameState";
 import { useStats } from "../hooks/zustand/useStats";
 import gsap from "gsap";
 
 function Stats() {
-  const { lastKeyPressed, lastKeyUpdateFlag } = useLastKey();
   const { setIsFinished } = useGameState();
   const { wpm, accuracy } = useStats();
   const cardWrapperRef = useRef<HTMLDivElement>(null);
@@ -59,10 +57,6 @@ function Stats() {
     };
   }, []);
 
-  useEffect(() => {
-    if (lastKeyPressed == "Enter") reset();
-  }, [lastKeyUpdateFlag]);
-
   function reset() {
     cardWrapperRef.current?.classList.add("out");
     setTimeout(() => {
@@ -71,7 +65,7 @@ function Stats() {
     }, 400);
   }
   return (
-    <div className={`stats-screen`}>
+    <div className={`stats-screen`} id="stats">
       <div className="card-wrapper" ref={cardWrapperRef}>
         <div className="glow-card animated-gradient glow-shadow">
           <div className="inner">
