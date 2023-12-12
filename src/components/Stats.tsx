@@ -65,7 +65,7 @@ function Stats() {
     }, 400);
   }
   return (
-    <div className={`stats-screen`} id="stats">
+    <div className={`stats-screen`}>
       <div className="card-wrapper" ref={cardWrapperRef}>
         <div className="glow-card animated-gradient glow-shadow">
           <div className="inner">
@@ -84,7 +84,9 @@ function Stats() {
               <button onClick={reset}>
                 <img src="icons/restart.svg" alt="restart" />
               </button>
-              <small className="enter gray">enter</small>
+              <small className="keys gray">
+                <span>tab</span> + <span>enter</span>
+              </small>
             </div>
           </div>
         </div>

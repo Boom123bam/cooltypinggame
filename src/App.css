@@ -372,7 +372,7 @@ footer {
 
   .wpm > .small,
   .accuracy > .small,
-  .enter {
+  .keys {
     color: var(--gray-700);
   }
 
@@ -408,10 +408,16 @@ footer {
         transition: rotate 0.5s;
       }
 
-      &:hover {
+      &:focus-visible {
+        outline: none;
+      }
+
+      &:hover,
+      &:focus-visible {
         background-color: #00000050;
       }
-      &:hover > img {
+      &:hover > img,
+      &:focus-visible > img {
         rotate: 0.5turn;
       }
     }
@@ -437,10 +443,12 @@ footer {
     );
   }
 
-  .enter {
-    border: 1px solid;
-    border-radius: 0.3rem;
-    padding: 0.1rem 0.5rem;
+  .keys {
+    > span {
+      border: 1px solid;
+      border-radius: 0.3rem;
+      padding: 0.1rem 0.5rem;
+    }
   }
 }
 
