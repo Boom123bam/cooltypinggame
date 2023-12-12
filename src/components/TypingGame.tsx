@@ -232,7 +232,10 @@ function TypingGame() {
   return (
     <>
       <div className={`typing-game-wrapper`}>
-        <div className="text-display-wrapper">
+        <div
+          className="text-display-wrapper"
+          onClick={() => document.getElementById("input")?.focus()}
+        >
           {gamemodeSettings.gamemode == "time" && (
             <div className="timer">{timeLeft}</div>
           )}
