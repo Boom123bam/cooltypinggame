@@ -97,6 +97,11 @@ b {
   }
 }
 
+#input {
+  outline: none;
+  color: transparent;
+}
+
 .text-display {
   --rows: 3;
   --height: 4rem;
