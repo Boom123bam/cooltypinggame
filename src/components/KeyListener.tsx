@@ -1,19 +1,43 @@
-import { useEffect } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 import { useLastKey } from "../hooks/zustand/useLastKey";
+import { useGameState } from "../hooks/zustand/useGameState";
 
 function KeyListener() {
-  const { setLastKey } = useLastKey();
+  const { isFinished } = useGameState();
 
-  function handleKeyDown(e: KeyboardEvent) {
-    setLastKey(e.key);
+  const { setLastKey } = useLastKey();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value;
+    if (val) setLastKey(val);
+    e.target.value = "";
+  }
+
+  function handleUnfocus() {
+    // refocus on key press
+    document.addEventListener(
+      "keypress",
+      () => inputRef.current?.focus(),
+      {
+        once: true,
+      }
+    );
   }
 
   useEffect(() => {
-    // Add event listener
-    document.addEventListener("keypress", handleKeyDown, {
-      // once: true,
-    });
+    inputRef.current?.focus();
   }, []);
-  return <></>;
+
+  return (
+    <>
+      <input
+        onChange={handleInputChange}
+        ref={inputRef}
+        onBlur={handleUnfocus}
+        tabIndex={isFinished ? -1 : 1}
+      ></input>
+    </>
+  );
 }
 export default KeyListener;
