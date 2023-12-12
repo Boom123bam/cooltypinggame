@@ -4,7 +4,6 @@ import { useGameState } from "../hooks/zustand/useGameState";
 
 function KeyListener() {
   const { isFinished } = useGameState();
-
   const { setLastKey } = useLastKey();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -16,6 +15,7 @@ function KeyListener() {
 
   function handleUnfocus() {
     // refocus on key press
+    if (isFinished) return;
     document.addEventListener(
       "keypress",
       () => inputRef.current?.focus(),
@@ -29,6 +29,11 @@ function KeyListener() {
     inputRef.current?.focus();
   }, []);
 
+  useEffect(() => {
+    if (isFinished) {
+      document.body.focus();
+    } else inputRef.current?.focus();
+  }, [isFinished]);
   return (
     <>
       <input
