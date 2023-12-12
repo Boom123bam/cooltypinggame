@@ -21,7 +21,8 @@ body {
   align-items: center;
 }
 
-*:focus-visible {
+button:focus-visible,
+a:focus-visible {
   outline: 1px solid white;
   outline-offset: 2px;
 }
@@ -98,7 +99,6 @@ b {
 }
 
 #input {
-  outline: none;
   color: transparent;
   opacity: 0;
 }

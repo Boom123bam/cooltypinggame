@@ -65,7 +65,7 @@ function Stats() {
     }, 400);
   }
   return (
-    <div className={`stats-screen`}>
+    <div className={`stats-screen`} id="result" tabIndex={-1}>
       <div className="card-wrapper" ref={cardWrapperRef}>
         <div className="glow-card animated-gradient glow-shadow">
           <div className="inner">

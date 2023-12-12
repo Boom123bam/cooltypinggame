@@ -31,7 +31,7 @@ function KeyListener() {
 
   useEffect(() => {
     if (isFinished) {
-      document.body.focus();
+      document.getElementById("result")?.focus();
     } else inputRef.current?.focus();
   }, [isFinished]);
   return (
