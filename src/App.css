@@ -262,11 +262,12 @@ b {
   }
 
   .major-options .option:active ~ .selection-indicator-wrapper {
-    /* scale: 1.25 1; */
     --transition-duration: 0.15s;
     > span {
-      scale: calc(1 + var(--morph-factor) * var(--morph-factor) * 0.1)
-        calc(1 - var(--morph-factor) * var(--morph-factor) * 0.2);
+      scale: calc(
+          1 + var(--morph-factor) * var(--morph-factor) * 0.05
+        )
+        calc(1 - var(--morph-factor) * var(--morph-factor) * 0.1);
       transition-timing-function: unset;
     }
   }
@@ -280,20 +281,24 @@ b {
     z-index: 1;
     mix-blend-mode: difference;
     transition-duration: var(--transition-duration);
-    transition-timing-function: cubic-bezier(0.35, 1.44, 0.41, 1);
+    /* transition-timing-function: cubic-bezier(0.35, 1.44, 0.41, 1); */
+    transition-timing-function: cubic-bezier(0.25, 1.44, 0.5, 1);
+
     left: 0;
     top: 50%;
     translate: 0 -50%;
     pointer-events: none;
     transform: translateX(calc(var(--morph-factor) * 10%));
+    scale: calc(1 + var(--morph-factor) * var(--morph-factor) * 0.05)
+      calc(1 - var(--morph-factor) * var(--morph-factor) * 0.1);
 
     > span {
       display: block;
       width: 100%;
       height: 100%;
       border-radius: 100px;
-      transition-duration: var(--transition-duration);
-      transition-timing-function: cubic-bezier(0.5, 3, 0.65, 1);
+      transition-duration: calc(1.5 * var(--transition-duration));
+      transition-timing-function: cubic-bezier(0.5, 6, 0, 1);
     }
   }
 
