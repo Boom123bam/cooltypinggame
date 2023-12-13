@@ -3,13 +3,10 @@ import { useGameState } from "../hooks/zustand/useGameState";
 import { setLocalGameModeSettings } from "../utils/localStorage";
 import { GameModeOptions } from "../types/types";
 import { options } from "../constants";
-import { useRef } from "react";
-import gsap from "gsap";
 
 function GameModeSelector() {
   const { isTyping, isFinished } = useGameState();
   const { gamemodeSettings, setGameModeSettings } = useGameSettings();
-  const selectionIndicatorRef = useRef<HTMLSpanElement>(null);
 
   function handleMajorOptionClick(option: keyof GameModeOptions) {
     if (gamemodeSettings.gamemode != option) {
@@ -21,21 +18,6 @@ function GameModeSelector() {
             ? optionValues[0]
             : null,
       };
-      if (selectionIndicatorRef.current) {
-        // tl.play();
-        gsap.to(selectionIndicatorRef.current, {
-          height: "10%",
-          duration: 0.15,
-          ease: "power2.out",
-          onComplete: () => {
-            gsap.to(selectionIndicatorRef.current, {
-              height: "100%",
-              duration: 0.15,
-              ease: "power2.in",
-            });
-          },
-        });
-      }
       setGameModeSettings(newSettings);
       setLocalGameModeSettings(newSettings);
     }
@@ -69,10 +51,9 @@ function GameModeSelector() {
             {option}
           </button>
         ))}
-        <span
-          className="selection-indicator gradient glow-shadow"
-          ref={selectionIndicatorRef}
-        ></span>
+        <div className="selection-indicator-wrapper">
+          <span className="selection-indicator gradient glow-shadow"></span>
+        </div>
       </div>
       <div className="minor-options">
         {options[gamemodeSettings.gamemode]?.map((option, index) => (
