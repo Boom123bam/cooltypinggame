@@ -210,6 +210,9 @@ b {
   .major-options .option {
     &:hover
       + .option[aria-selected="true"]
+      ~ .selection-indicator-wrapper,
+    &:focus-visible
+      + .option[aria-selected="true"]
       ~ .selection-indicator-wrapper {
       --morph-factor: -1;
     }
@@ -221,6 +224,10 @@ b {
   }
   .major-options .option {
     &:hover
+      + .option
+      + .option[aria-selected="true"]
+      ~ .selection-indicator-wrapper,
+    &:focus-visible
       + .option
       + .option[aria-selected="true"]
       ~ .selection-indicator-wrapper {
@@ -235,7 +242,8 @@ b {
   }
 
   .major-options .option[aria-selected="true"] + .option {
-    &:hover ~ .selection-indicator-wrapper {
+    &:hover ~ .selection-indicator-wrapper,
+    &:focus-visible ~ .selection-indicator-wrapper {
       --morph-factor: 1;
     }
     &:hover:active ~ .selection-indicator-wrapper {
@@ -244,7 +252,8 @@ b {
   }
 
   .major-options .option[aria-selected="true"] + .option + .option {
-    &:hover ~ .selection-indicator-wrapper {
+    &:hover ~ .selection-indicator-wrapper,
+    &:focus-visible ~ .selection-indicator-wrapper {
       --morph-factor: 2;
     }
     &:hover:active ~ .selection-indicator-wrapper {
