@@ -8,11 +8,14 @@ const twistFactor = 0.075;
 const letterWidth = 1;
 const maxCharsToShow = 25;
 const options: GameModeOptions = {
-  time: [15, 30, 60],
+  time: [1, 30, 60],
   words: [10, 25, 50],
   infinite: null,
 };
-const allowAutoType = false;
+const allowAutoType = true;
+
+const audioPath = "/sfx/choir";
+const numNotes = 10;
 
 export {
   cameraDist,
@@ -24,4 +27,6 @@ export {
   options,
   allowAutoType,
   twistFactor,
+  audioPath,
+  numNotes,
 };

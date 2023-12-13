@@ -7,7 +7,8 @@ import { useGameSettings } from "../hooks/zustand/useGameSettings";
 import { useGameState } from "../hooks/zustand/useGameState";
 import { useStats } from "../hooks/zustand/useStats";
 import timer from "../utils/timer";
-import { allowAutoType } from "../constants";
+import { allowAutoType, numNotes } from "../constants";
+import { playNote } from "../utils/audio";
 
 function TypingGame() {
   const { setIsTyping, isTyping, setIsFinished, isFinished } =
@@ -36,6 +37,8 @@ function TypingGame() {
   const numWrongChars = useRef(0);
   const lastWrongCharIndex = useRef(-1);
 
+  const firstNoteIndexRef = useRef(0);
+
   const updateWords = async (amount: number, append = true) => {
     updatingWordsRef.current = true;
     const wordList = await getRandomWordList(amount, "English_1k");
@@ -61,7 +64,15 @@ function TypingGame() {
     lastWrongCharIndex.current = -1;
   }
 
+  function setFirstNote(wordLength: number) {
+    firstNoteIndexRef.current = Math.floor(
+      Math.random() * (numNotes - wordLength - 1)
+    );
+  }
+
   function handleNewWord() {
+    setFirstNote(allWords[typingState.typingWordIndex].length);
+
     if (gamemodeSettings.gamemode == "words") return;
 
     // infinite and time gamemode: fetch words when almost all words typed
@@ -87,6 +98,10 @@ function TypingGame() {
 
   function handleCorrectKey() {
     // correct key
+    console.log(
+      firstNoteIndexRef.current + typingState.typingCharIndex
+    );
+    playNote(firstNoteIndexRef.current + typingState.typingCharIndex);
 
     if (
       gamemodeSettings.gamemode == "words" &&
@@ -160,6 +175,7 @@ function TypingGame() {
   // On mount
   useEffect(() => {
     if (didMount.current) return;
+
     // instantiate timer
     countDownRef.current = new timer({
       onChange: (timeLeft) => setTimeLeft(timeLeft),
@@ -221,7 +237,7 @@ function TypingGame() {
     // update state according to char typed
     if (
       stringToType[totalTypingCharIndex] == lastKeyPressed ||
-      (allowAutoType && lastKeyPressed == "Enter")
+      (allowAutoType && lastKeyPressed == " ")
     ) {
       handleCorrectKey();
     } else {
