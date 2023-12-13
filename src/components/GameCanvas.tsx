@@ -3,7 +3,15 @@ import TextTunnel from "./TextTunnnel";
 import { FC, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import textMaterial from "../utils/textMaterial";
-import { cameraDist, cameraMoveDuration } from "../constants";
+import {
+  baseFov,
+  cameraDist,
+  cameraMoveDuration,
+  fovFactor,
+  maxFov,
+} from "../constants";
+import { PerspectiveCamera } from "@react-three/drei";
+import { PerspectiveCamera as PerspectiveCameraClass } from "three";
 
 interface CameraControlsProps {
   stringToType: string;
@@ -17,6 +25,8 @@ const Scene: FC<CameraControlsProps> = ({
   const [tunnelLength, setTunnelLength] = useState(0);
   const textMaterialRef = useRef(textMaterial);
   const timeRef = useRef(0);
+  const camRef = useRef<PerspectiveCameraClass>(null);
+  const prevZPosRef = useRef(0);
 
   // Access the camera
   const { camera } = useThree();
@@ -28,11 +38,24 @@ const Scene: FC<CameraControlsProps> = ({
   useEffect(() => {
     // Start the animation loop when the component mounts
     const animate = () => {
-      timeRef.current += 0.01;
+      const newPos = camRef.current?.position.z ?? 0;
+      if (timeRef.current % 10 == 0) {
+        // update speed and fov every 10 ticks
 
+        const speed = prevZPosRef.current - newPos;
+        prevZPosRef.current = newPos;
+
+        if (camRef.current?.fov)
+          gsap.to(camRef.current, {
+            fov: Math.min(baseFov + speed * fovFactor, maxFov),
+            duration: cameraMoveDuration,
+            onUpdate: () => camRef.current?.updateProjectionMatrix(),
+          });
+      }
+
+      timeRef.current += 1;
       textMaterialRef.current.uniforms.u_time.value = timeRef.current;
-      textMaterialRef.current.uniforms.distance.value =
-        gsap.getProperty(camera.position, "z");
+      textMaterialRef.current.uniforms.distance.value = newPos;
 
       requestAnimationFrame(animate);
     };
@@ -41,11 +64,14 @@ const Scene: FC<CameraControlsProps> = ({
   }, []);
 
   return (
-    <TextTunnel
-      typedString={stringToType.slice(0, currentIndex)}
-      setTunnelLength={setTunnelLength}
-      textMaterialRef={textMaterialRef}
-    />
+    <>
+      <PerspectiveCamera makeDefault fov={120} ref={camRef} />
+      <TextTunnel
+        typedString={stringToType.slice(0, currentIndex)}
+        setTunnelLength={setTunnelLength}
+        textMaterialRef={textMaterialRef}
+      />
+    </>
   );
 };
 

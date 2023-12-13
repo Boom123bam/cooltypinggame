@@ -221,7 +221,7 @@ function TypingGame() {
     // update state according to char typed
     if (
       stringToType[totalTypingCharIndex] == lastKeyPressed ||
-      (allowAutoType && lastKeyPressed == "Enter")
+      (allowAutoType && lastKeyPressed == " ")
     ) {
       handleCorrectKey();
     } else {
